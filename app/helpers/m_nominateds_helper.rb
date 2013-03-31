@@ -1,0 +1,2 @@
+module MNominatedsHelper
+end

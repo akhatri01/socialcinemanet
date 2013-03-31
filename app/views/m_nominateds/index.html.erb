@@ -1,0 +1,27 @@
+<h1>Listing m_nominateds</h1>
+
+<table>
+  <tr>
+    <th>Oid</th>
+    <th>Mid</th>
+    <th>Year</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @m_nominateds.each do |m_nominated| %>
+  <tr>
+    <td><%= m_nominated.oid %></td>
+    <td><%= m_nominated.mid %></td>
+    <td><%= m_nominated.year %></td>
+    <td><%= link_to 'Show', m_nominated %></td>
+    <td><%= link_to 'Edit', edit_m_nominated_path(m_nominated) %></td>
+    <td><%= link_to 'Destroy', m_nominated, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New M nominated', new_m_nominated_path %>

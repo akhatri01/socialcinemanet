@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Oid:</b>
+  <%= @m_nominated.oid %>
+</p>
+
+<p>
+  <b>Mid:</b>
+  <%= @m_nominated.mid %>
+</p>
+
+<p>
+  <b>Year:</b>
+  <%= @m_nominated.year %>
+</p>
+
+
+<%= link_to 'Edit', edit_m_nominated_path(@m_nominated) %> |
+<%= link_to 'Back', m_nominateds_path %>

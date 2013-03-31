@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  pid: 1
+  mid: 1
+  role_name: MyString
+
+two:
+  pid: 1
+  mid: 1
+  role_name: MyString

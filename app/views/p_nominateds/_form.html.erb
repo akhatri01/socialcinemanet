@@ -1,0 +1,33 @@
+<%= form_for(@p_nominated) do |f| %>
+  <% if @p_nominated.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@p_nominated.errors.count, "error") %> prohibited this p_nominated from being saved:</h2>
+
+      <ul>
+      <% @p_nominated.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :oid %><br />
+    <%= f.number_field :oid %>
+  </div>
+  <div class="field">
+    <%= f.label :pid %><br />
+    <%= f.number_field :pid %>
+  </div>
+  <div class="field">
+    <%= f.label :mid %><br />
+    <%= f.number_field :mid %>
+  </div>
+  <div class="field">
+    <%= f.label :year %><br />
+    <%= f.number_field :year %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

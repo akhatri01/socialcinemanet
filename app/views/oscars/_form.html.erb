@@ -1,0 +1,21 @@
+<%= form_for(@oscar) do |f| %>
+  <% if @oscar.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@oscar.errors.count, "error") %> prohibited this oscar from being saved:</h2>
+
+      <ul>
+      <% @oscar.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :category %><br />
+    <%= f.text_field :category %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

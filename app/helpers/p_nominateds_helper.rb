@@ -1,0 +1,2 @@
+module PNominatedsHelper
+end

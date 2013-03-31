@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  oid: 1
+  pid: 1
+  mid: 1
+  year: 1
+
+two:
+  oid: 1
+  pid: 1
+  mid: 1
+  year: 1
