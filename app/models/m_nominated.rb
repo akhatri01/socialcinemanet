@@ -4,4 +4,6 @@ class MNominated < ActiveRecord::Base
   set_table_name "m_nominated"
   
   
+  
+  
 end
