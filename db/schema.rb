@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130331181442) do
+ActiveRecord::Schema.define(:version => 20130331184044) do
 
   create_table "classifieds", :id => false, :force => true do |t|
     t.integer  "mid",        :default => 0, :null => false
@@ -38,15 +38,6 @@ ActiveRecord::Schema.define(:version => 20130331181442) do
   end
 
   add_index "m_nominated", ["mid"], :name => "mid"
-
-  create_table "modifies", :force => true do |t|
-    t.integer  "uid"
-    t.integer  "mid"
-    t.string   "action"
-    t.string   "data"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
 
   create_table "movies", :force => true do |t|
     t.string   "name"
@@ -104,6 +95,17 @@ ActiveRecord::Schema.define(:version => 20130331181442) do
   end
 
   add_index "roles", ["mid"], :name => "mid"
+
+  create_table "u_modify", :id => false, :force => true do |t|
+    t.integer  "uid",        :default => 0, :null => false
+    t.integer  "mid",        :default => 0, :null => false
+    t.string   "action"
+    t.string   "data"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "u_modify", ["mid"], :name => "mid"
 
   create_table "users", :force => true do |t|
     t.string   "fname"

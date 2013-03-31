@@ -1,4 +1,4 @@
-class CreateClassifieds < ActiveRecord::Migration
+class CreateClassifiedTable < ActiveRecord::Migration
   def up
     create_table :classifieds, {:id => false} do |t|
       t.integer :mid
