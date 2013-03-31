@@ -1,0 +1,29 @@
+<h1>Listing modifies</h1>
+
+<table>
+  <tr>
+    <th>Uid</th>
+    <th>Mid</th>
+    <th>Action</th>
+    <th>Data</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @modifies.each do |modify| %>
+  <tr>
+    <td><%= modify.uid %></td>
+    <td><%= modify.mid %></td>
+    <td><%= modify.action %></td>
+    <td><%= modify.data %></td>
+    <td><%= link_to 'Show', modify %></td>
+    <td><%= link_to 'Edit', edit_modify_path(modify) %></td>
+    <td><%= link_to 'Destroy', modify, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Modify', new_modify_path %>

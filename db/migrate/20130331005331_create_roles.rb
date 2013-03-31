@@ -7,14 +7,12 @@ class CreateRoles < ActiveRecord::Migration
 
       t.timestamps
     end
-    
-    execute "ALTER TABLE roles ADD PRIMARY KEY (pid, mid);"
-    execute "ALTER TABLE roles ADD  FOREIGN KEY(pid) REFERENCES persons(id) "
-    execute "ALTER TABLE roles ADD  FOREIGN KEY(mid) REFERENCES movies(id) "
-    
+    execute 'ALTER TABLE roles ADD PRIMARY KEY (pid, mid, role_name);'
+    execute 'ALTER TABLE roles ADD FOREIGN KEY (pid) REFERENCES persons(id);'
+    execute 'ALTER TABLE roles ADD FOREIGN KEY (mid) REFERENCES movies(id);'
   end
   
   def down
-    drop_table  :roles
+    drop_table :roles
   end
 end

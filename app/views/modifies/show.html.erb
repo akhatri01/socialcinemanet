@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Uid:</b>
+  <%= @modify.uid %>
+</p>
+
+<p>
+  <b>Mid:</b>
+  <%= @modify.mid %>
+</p>
+
+<p>
+  <b>Action:</b>
+  <%= @modify.action %>
+</p>
+
+<p>
+  <b>Data:</b>
+  <%= @modify.data %>
+</p>
+
+
+<%= link_to 'Edit', edit_modify_path(@modify) %> |
+<%= link_to 'Back', modifies_path %>

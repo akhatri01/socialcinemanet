@@ -1,4 +1,13 @@
 SocialCinemaNet::Application.routes.draw do
+  resources :modifies
+
+
+  resources :ratings
+
+
+  resources :classifieds
+
+
   resources :m_nominateds
 
 
