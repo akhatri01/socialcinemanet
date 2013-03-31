@@ -12,7 +12,12 @@ namespace :parse do
     csv.each do |row|
       /(\w*),\s(\w*)(\s(\w*))*/ =~ row[1]
       persons.push({'fname' => ($2 || ''), 'mname' => ($4 || ''), 'lname' => $1})
+      #Person.create(fname: $2, mname: $4, lname: $1)
     end
     puts persons
+    @fname = persons[1]["fname"]
+    @lname = persons[1]["lname"]
+    @mname = persons[1]["mname"]
+    Person.create(fname: @fname, mname: @mname, lname: @lname )
   end
 end
