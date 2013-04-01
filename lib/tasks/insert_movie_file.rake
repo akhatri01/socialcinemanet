@@ -35,6 +35,8 @@ task :movie_genre_classified_csv => [:environment] do
     rescue ActiveRecord::RecordNotUnique
       puts row[1]
       puts "duplicate record (not inserting): #{row[1]}"
+    rescue
+      next
     end
 
   end
