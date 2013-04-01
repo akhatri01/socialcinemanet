@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130401040107) do
+ActiveRecord::Schema.define(:version => 20130401060648) do
 
   create_table "classifieds", :id => false, :force => true do |t|
     t.integer  "mid",        :default => 0, :null => false
@@ -23,12 +23,12 @@ ActiveRecord::Schema.define(:version => 20130401040107) do
   add_index "classifieds", ["gid"], :name => "gid"
 
   create_table "genres", :force => true do |t|
-    t.string   "name"
+    t.string   "category"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  add_index "genres", ["name"], :name => "name", :unique => true
+  add_index "genres", ["category"], :name => "name", :unique => true
 
   create_table "m_nominated", :id => false, :force => true do |t|
     t.integer  "oid",        :default => 0, :null => false
