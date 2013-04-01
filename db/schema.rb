@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130331232857) do
+ActiveRecord::Schema.define(:version => 20130401040107) do
 
   create_table "classifieds", :id => false, :force => true do |t|
     t.integer  "mid",        :default => 0, :null => false
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(:version => 20130331232857) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "genres", ["name"], :name => "name", :unique => true
 
   create_table "m_nominated", :id => false, :force => true do |t|
     t.integer  "oid",        :default => 0, :null => false
@@ -48,11 +50,16 @@ ActiveRecord::Schema.define(:version => 20130331232857) do
     t.datetime "updated_at",   :null => false
   end
 
+  add_index "movies", ["name", "release_date"], :name => "name_date", :unique => true
+  add_index "movies", ["name", "release_date"], :name => "name_date_constraint", :unique => true
+
   create_table "oscars", :force => true do |t|
     t.string   "category"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "oscars", ["category"], :name => "category_constraint", :unique => true
 
   create_table "p_nominated", :id => false, :force => true do |t|
     t.integer  "oid",        :default => 0, :null => false
@@ -75,8 +82,6 @@ ActiveRecord::Schema.define(:version => 20130331232857) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
-
-  add_index "persons", ["fname", "mname", "lname"], :name => "persons_unique_constraint", :unique => true
 
   create_table "ratings", :id => false, :force => true do |t|
     t.integer  "uid",        :default => 0, :null => false
@@ -120,5 +125,7 @@ ActiveRecord::Schema.define(:version => 20130331232857) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "users", ["email"], :name => "email_constraint", :unique => true
 
 end
