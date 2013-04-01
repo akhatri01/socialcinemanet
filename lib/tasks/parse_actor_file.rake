@@ -1,8 +1,8 @@
 require 'csv'
 require 'open-uri'
 
-@tmdb_search = "http://private-68e6-themoviedb.apiary.io/3/search/person?api_key=87c41d34aef9b780524821b0ef5afe91&query="
-@tmdb_get_person = lambda{|id| "http://private-68e6-themoviedb.apiary.io/3/person/#{id}?api_key=87c41d34aef9b780524821b0ef5afe91"}
+@tmdb_search = "http://api.themoviedb.org/3/search/person?api_key=87c41d34aef9b780524821b0ef5afe91&query="
+@tmdb_get_person = lambda{|id| "http://api.themoviedb.org/3/person/#{id}?api_key=87c41d34aef9b780524821b0ef5afe91"}
 
 # uses the api from : http://docs.themoviedb.apiary.io/
 # Steps:
@@ -55,12 +55,12 @@ namespace :parse do
           p.dob = tmdb_person["birthday"]
           p.save
         end
-        sleep(0.25) # adding sleep because of 30 requests per 10 sec limit
       rescue ActiveRecord::RecordNotUnique
         puts row[1]
         puts "duplicate record (not inserting): #{fname} #{mname} #{lname}"
       rescue OpenURI::HTTPError
         puts "Curr_name: #{fullname}. Error connecting to tmdb, continuing to next row."
+        sleep(5) # adding sleep because of 30 requests per 10 sec limit
         next
       end
     end
