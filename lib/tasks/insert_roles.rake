@@ -14,7 +14,6 @@ namespace :parse do
     puts "Creating the hash and updating the nodes, takes a while"
     h = Hash.new
     doc.xpath("//node").each do |node| 
-      next if ctr == 100000
       #puts node.xpath("//node/data[@key='k0']")
       id = node.values[0]
       val = Nokogiri::XML(node.to_s).xpath("//data").first.text
