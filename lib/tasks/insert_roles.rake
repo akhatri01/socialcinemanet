@@ -14,10 +14,17 @@ namespace :parse do
     puts "Creating the hash and updating the nodes, takes a while"
     h = Hash.new
     doc.xpath("//node").each do |node| 
+      next if ctr == 100000
       #puts node.xpath("//node/data[@key='k0']")
       id = node.values[0]
       val = Nokogiri::XML(node.to_s).xpath("//data").first.text
-      h[id] = val
+      val2 = nil
+      if Nokogiri::XML(node.to_s).xpath("//data")[2]
+        val2 = Nokogiri::XML(node.to_s).xpath("//data")[2].text
+        h[id] = [val, val2]
+      else
+        h[id] = val
+      end
       puts ctr
       ctr += 1
     end
@@ -49,23 +56,31 @@ namespace :parse do
           #puts "#{person}, #{movie}"
 
           #find first name, last name and movie name
-          pname = person.split(',')
+          pname = person[0].split(',')
           if(pname.length >= 2)
-            lname = pname[0].strip
-            fname = pname[1].strip
+            lname = pname.strip
+            fname = pname.strip
           else
-            fname = pname[0].strip
+            fname = pname.strip
             lname = ""
           end
-          mname = movie.strip
+          mname = movie[0].strip.downcase
+          myear = movie[1].strip
           
           # Create into Role table
-          if (!Person.find_by_fname_and_lname(fname, lname).nil? and !Movie.find_by_name(mname).nil?)
+          if (!Person.find_by_fname_and_lname(fname, lname).nil? and !Movie.where('LOWER(name)=? AND release_date BETWEEN ? AND ?', mname, "#{myear}-01-01", "#{myear}-12-31").nil?)
             begin
               #puts "YOu are here"
               ppid = Person.find_by_fname_and_lname(fname, lname).id
-              mmid = Movie.find_by_name(mname).id
-              Role.create(mid: mmid, pid: ppid)
+              # mmid = Movie.find_by_name(mname).id
+              m = Movie.where('LOWER(name)=? AND release_date BETWEEN ? AND ?', mname, "#{myear}-01-01", "#{myear}-12-31")
+              if m.length == 1     # found movie
+                mmid = m.id
+              else
+                # movie not found, move on
+                next
+              end
+              Role.create(mid: mmid, pid: ppid, role_name: 'actor')
               puts "#{count} Row Inserted"
               count += 1
 
