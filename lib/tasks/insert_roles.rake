@@ -14,22 +14,26 @@ namespace :parse do
     puts "Creating the hash and updating the nodes, takes a while"
     h = Hash.new
     doc.xpath("//node").each do |node| 
+      # if ctr > 25000 && ctr < 1300000 
+      #   ctr += 1
+      #   next
+      # end
       #puts node.xpath("//node/data[@key='k0']")
       id = node.values[0]
-      val = Nokogiri::XML(node.to_s).xpath("//data").first.text
+      parsed = Nokogiri::XML(node.to_s).xpath("//data")
+      val1 = parsed.first.text
       val2 = nil
-      if Nokogiri::XML(node.to_s).xpath("//data")[2]
-        val2 = Nokogiri::XML(node.to_s).xpath("//data")[2].text
-        h[id] = [val, val2]
+      if parsed[2]
+        val2 = parsed[2].text
+        h[id] = [val1, val2]
       else
-        h[id] = val
+        h[id] = [val1]
       end
       puts ctr
       ctr += 1
     end
     
     puts "Done creating Hash!!!!!!!!!"
-    
     
     count = 1
    
@@ -57,11 +61,11 @@ namespace :parse do
           #find first name, last name and movie name
           pname = person[0].split(',')
           if(pname.length >= 2)
-            lname = pname.strip
-            fname = pname.strip
+            lname = pname[0].strip
+            fname = pname[1].strip
           else
-            fname = pname.strip
-            lname = ""
+            fname = ""
+            lname = pname[0].strip
           end
           mname = movie[0].strip.downcase
           myear = movie[1].strip
@@ -74,7 +78,7 @@ namespace :parse do
               # mmid = Movie.find_by_name(mname).id
               m = Movie.where('LOWER(name)=? AND release_date BETWEEN ? AND ?', mname, "#{myear}-01-01", "#{myear}-12-31")
               if m.length == 1     # found movie
-                mmid = m.id
+                mmid = m[0].id
               else
                 # movie not found, move on
                 next
