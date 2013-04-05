@@ -1,12 +1,12 @@
 require 'nokogiri'
 
 namespace :parse do
-  desc "Import movie database from csv file"
+  desc "Populate Roles table"
   task :role_xml => [:environment] do
     
     #opening file
     puts 'Opening file, it may take some time'
-    f = File.open('lib/data/imdb.xml')
+    f = File.open('lib/data/actors_movie.xml')
     doc = Nokogiri::XML(f)
   
     ctr = 1
