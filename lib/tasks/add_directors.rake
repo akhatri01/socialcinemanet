@@ -89,7 +89,7 @@ namespace :parse do
 						next
 					end
 					Role.create(mid: mmid, pid: ppid, role_name: 'director')
-					puts "#{count} Row Inserted"
+					puts "#{count} Row Inserted out of #{idx} reads"
 					count += 1
 	
 				rescue ActiveRecord::RecordNotUnique
@@ -109,28 +109,3 @@ end
 end
 
 
-    
-  
-=begin  
-   
-   doc = Nokogiri::XML(f)
-    
-    count = 1
-    # reading through each node containing information about the name
-    doc.xpath("//film").each do |node|
-      data = Nokogiri::XML(node.to_s)
-      pname = data.xpath('//pname').text
-      dname = data.xpath('//dirn').text
-      year = data.xpath('//year').text
-      film = data.xpath('//t').text
-      puts "Film => #{data.xpath('//t').text}"
-      puts "Producer  => #{pname}"
-      puts "Director => #{dname}"
-      puts "Year => #{year}"
-      puts "Next Record -------------------------------------"
-    end
-  end
-end
-
-=end
-  
