@@ -100,7 +100,7 @@ namespace :parse do
 		rescue Exception =>e
 			puts "#{e}"
 		end
-      break if idx >= 100000
+      #break if idx >= 100000
       #puts
       
       #puts row[1]
