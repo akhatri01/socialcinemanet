@@ -8,7 +8,47 @@
 </head>
 <body>
 
-<%= yield %>
+  <div id="header">
+    <div class="container">
+      <div id="user-links">
+        <ul>
+          <li><%= link_to 'Register', '#' %></li>
+          <li><%= link_to 'Login', '#' %></li>
+          <li><%= link_to 'Help', '#' %></li>
+        </ul>
+      </div>
+      <div id="logo">SocialCinemaNet</div>
+      <div id="search">
+        <input type="text" class="search"><input type="button" value="Search">
+      </div>
+      <div id="nav" class="clearfix">
+        <ul>
+          <li><%= link_to 'Home', '#' %></li>
+          <li><%= link_to 'Rate', '#' %></li>
+          <li><%= link_to 'Movie Update', '#' %></li>
+          <li><%= link_to 'Notifications', '#' %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="content">
+    <div id="content" class="container">
+      <%= yield %>
+    </div>
+  </div>
+  
+  <div id="footer">
+    <div class="container">
+      <div class="footer-nav clearfix">
+        <ul>
+          <li><%= link_to 'Home', '#' %></li>
+          <li><%= link_to 'Rate', '#' %></li>
+          <li><%= link_to 'Movie Update', '#' %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>
