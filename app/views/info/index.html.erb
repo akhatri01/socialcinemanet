@@ -20,7 +20,7 @@
 <% @movies.each do |movie| %>
   <tr>
     <td>
-      <%= movie.name %>
+      <%= movie.name.titleize %>
     </td>
     <td>
       <%= movie.release_date.year %>
