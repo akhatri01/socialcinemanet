@@ -17,13 +17,17 @@
           <li><%= link_to 'Help', '#' %></li>
         </ul>
       </div>
-      <div id="logo">SocialCinemaNet</div>
+      <div id="logo"><%= image_tag 'logo.png' %><!-- SocialCinemaNet --></div>
       <div id="search">
         <input type="text" class="search"><input type="button" value="Search">
       </div>
       <div id="nav" class="clearfix">
-        <ul>
+        <ul class="clearfix">
           <li><%= link_to 'Home', '#' %></li>
+          <li><%= link_to 'Movies', '#' %></li>
+          <li><%= link_to 'Genres', '#' %></li>
+          <li><%= link_to 'Actors', '#' %></li>
+          <li><%= link_to 'Directors', '#' %></li>
           <li><%= link_to 'Rate', '#' %></li>
           <li><%= link_to 'Movie Update', '#' %></li>
           <li><%= link_to 'Notifications', '#' %></li>

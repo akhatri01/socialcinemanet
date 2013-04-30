@@ -12,7 +12,7 @@ class InfoController < ApplicationController
     
     if @idx <= 3 
       @page_nums = [ 1, 2, 3, 4, 5]
-    elsif @idx >= movie_count - 2
+    elsif @idx >= @max_pages - 2
       @page_nums = [ @max_pages-4, @max_pages-3, @max_pages-2, @max_pages-1, @max_pages]
     else
       @page_nums = [ @idx - 2, @idx - 1, @idx, @idx + 1, @idx + 2]
@@ -20,7 +20,7 @@ class InfoController < ApplicationController
     
    @sort_by = params[:sort_by] || 'name'
     
-    @movies = Movie.movie_tables(@idx, @sort_by)
+   @movies = Movie.movie_tables(@idx, @sort_by)
   end
 
 end

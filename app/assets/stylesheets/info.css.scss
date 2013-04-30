@@ -1,3 +1,99 @@
+// sets up prefixes for browser specific properties
+@mixin prefixer ($property, $value, $prefixes) {
+  @each $prefix in $prefixes {
+    @if $prefix == webkit {
+      -webkit-#{$property}: $value;
+    } @else if $prefix == moz {
+      -moz-#{$property}: $value;
+    } @else if $prefix == ms {
+      -ms-#{$property}: $value;
+    } @else if $prefix == o {
+      -o-#{$property}: $value;
+    } @else if $prefix == spec {
+      #{$property}: $value;
+    } @else {
+      @warn "Unrecognized prefix: #{$prefix}";
+    }
+  }
+}
+// mixins for rounded corners (specify corners)
+@mixin border-top-radius($radii) {
+  @include prefixer(border-top-left-radius, $radii, spec);
+  @include prefixer(border-top-right-radius, $radii, spec);
+}
+@mixin border-bottom-radius($radii) {
+  @include prefixer(border-bottom-left-radius, $radii, spec);
+  @include prefixer(border-bottom-right-radius, $radii, spec);
+}
+@mixin border-left-radius($radii) {
+  @include prefixer(border-top-left-radius, $radii, spec);
+  @include prefixer(border-bottom-left-radius, $radii, spec);
+}
+@mixin border-right-radius($radii) {
+  @include prefixer(border-top-right-radius, $radii, spec);
+  @include prefixer(border-bottom-right-radius, $radii, spec);
+}
+// mixin for rounded corners (all corners)
+@mixin border-radius($radii) {
+  @include border-top-radius($radii);
+  @include border-bottom-radius($radii);
+}
+
+@function compact($list) {
+  $new-list: ();
+  @each $element in $list {
+    @if $element {
+      $new-list: append($new-list, $element, comma);
+    }
+  }
+  @return $new-list;
+}
+// mixin for gradients
+@mixin linear-gradient($pos, $G1, $G2: false, $G3: false, $G4: false, $G5: false, $G6: false, $G7: false, $G8: false, $G9: false, $G10: false, $deprecated-pos1: left top, $deprecated-pos2: left bottom, $image: false, $image-offset: 0px 0px, $fallback: false) {        
+  $pos-type: type-of(nth($pos, 1));
+  @if ($pos-type == color) or (nth($pos, 1) == "transparent") {
+    $G10: $G9; 
+    $G9: $G8;
+    $G8: $G7;
+    $G7: $G6;
+    $G6: $G5;
+    $G5: $G4;
+    $G4: $G3;
+    $G3: $G2;
+    $G2: $G1;
+    $G1: $pos;
+    $pos: top;
+  }
+  $full: compact(($G1, $G2, $G3, $G4, $G5, $G6, $G7, $G8, $G9, $G10));
+  $fallback-color: nth($G1, 1);
+  @if (type-of($fallback) == color) or ($fallback == "transparent")  {
+    $fallback-color: $fallback;
+  }
+  background-color: $fallback-color;
+  @if ($image != false) {
+    background: url($image) $image-offset;
+    background: url($image) $image-offset, deprecated-webkit-gradient(linear, $deprecated-pos1, $deprecated-pos2, $full);
+    background: url($image) $image-offset, -webkit-linear-gradient($pos, $full);
+    background: url($image) $image-offset,    -moz-linear-gradient($pos, $full);
+    background: url($image) $image-offset,     -ms-linear-gradient($pos, $full);
+    background: url($image) $image-offset,      -o-linear-gradient($pos, $full);
+    background: url($image) $image-offset, unquote("linear-gradient(#{$pos}, #{$full})");
+  } @else {
+    background: deprecated-webkit-gradient(linear, $deprecated-pos1, $deprecated-pos2, $full);
+    background:  -webkit-linear-gradient($pos, $full);
+    background:     -moz-linear-gradient($pos, $full);
+    background:      -ms-linear-gradient($pos, $full);
+    background:       -o-linear-gradient($pos, $full);
+    background: unquote("linear-gradient(#{$pos}, #{$full})");
+  }
+}
+
+@mixin background-opacity($color, $opacity: 0.3) {
+  // The Fallback 
+  background: $color;
+  background: rgba($color, $opacity);
+}
+
 body {
   font: {
     size: 1em;
@@ -35,17 +131,28 @@ body {
   
   #nav {
     ul, li { list-style: none; margin: 0; padding: 0; }
+    ul {
+      border: 1px solid #000;
+      @include border-radius(2px);
+    }
     li {
       float: left;
       a {
         display: block;
-        padding: 5px 10px;
-        border: 1px solid #333;
+        padding: 0px 10px;
         margin-left: -1px;
+        border-left: 1px solid #000;
+        @include linear-gradient(#adc0ff 0%, #3e549d 4%, #1e306d 100%, $fallback: #1e306d);
+        color: white;
         font: {
           size: 85%;
         }
+        line-height: 30px;
         text-decoration: none;
+        
+        &:hover {
+          @include linear-gradient(#adc0ff 0%, #1e306d 4%, #3e549d 100%, $fallback: #3e549d);
+        }
       }
     }
   }
@@ -75,6 +182,8 @@ body {
 
 table {
   margin: 10px 0;
+  width: 100%;
+  max-width: 100%;
   thead {
     background: #eaeaea;
     font-size: 150%;

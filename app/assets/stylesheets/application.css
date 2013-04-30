@@ -11,5 +11,6 @@
  *= require normalize
  *= require clearfix
  *= require_self
- *= require_tree .
+ *= require scaffolds
+ *= require info
  */
