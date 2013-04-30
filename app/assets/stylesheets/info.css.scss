@@ -180,6 +180,7 @@ body {
       color: white;
       font-size: 70%;
       line-height: 28px;
+      height: 30px;
       &:hover {
         @include linear-gradient(#adc0ff 0%, #1e306d 4%, #3e549d 100%, $fallback: #3e549d);
       }
