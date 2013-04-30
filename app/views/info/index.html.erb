@@ -1,0 +1,60 @@
+<div id="sort-movies" class="sort">
+  Sort by:
+  <select>
+    <option value="title" <%= if @sort_by == 'name' then "selected=\"selected\"" end %> >Title</option>
+    <option value="year" <%= if @sort_by == 'year' then "selected=selected" end %> >Year</option>
+    <option value="imdb_rating" <%= if @sort_by == 'imdb_rating' then "selected=selected" end %> >IMDB Rating</option>
+    <option value="user_rating" <%= if @sort_by == 'user_rating' then "selected=selected" end %> >User Rating</option>
+  </select>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <td>Title</td>
+      <td>Year</td>
+      <td>IMDB Rating</td>
+      <td>Genre</td>
+    </tr>
+  </thead>
+<% @movies.each do |movie| %>
+  <tr>
+    <td>
+      <%= movie.name.titleize %>
+    </td>
+    <td>
+      <%= movie.release_date.year %>
+    </td>
+    <td class="imdb-rating">
+      <%= movie.imdb_rating || "-" %>
+    </td>
+    <td>
+      <%= movie.genre[0] ? movie.genre[0].category : "-" %>
+    </td>
+</tr>
+<% end %>
+</table>
+<div class="pagination">
+  <% vars = { :sort_by => @sort_by } %>
+  <% if @idx != 1 %>
+    <%= link_to "First", {:controller => "info", :action => "index", :idx => 1 }.merge(vars) %>
+  <% end %>
+  <% if @idx_prev %>
+    <%= link_to "Prev", {:controller => "info", :action => "index", :idx => @idx_prev }.merge(vars) %>
+  <% end %>
+  <% if @idx > 3 %>
+    ...
+  <% end %>
+  <% @page_nums.each do |page| %>
+    <%= link_to page.to_s, {:controller => "info", :action => "index", :idx => page }.merge(vars) %>
+  <% end %>
+  <% if @idx != @max_pages %>
+    ...
+  <% end %>
+  <% if @idx_next %>
+    <%= link_to "Next", {:controller => "info", :action => "index", :idx => @idx_next }.merge(vars) %>
+  <% end %>
+  <% if @idx < @max_pages - 2 %>
+    <%= link_to "Last", {:controller => "info", :action => "index", :idx => @max_pages }.merge(vars) %>
+  <% end %>
+</div>

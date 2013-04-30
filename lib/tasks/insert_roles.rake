@@ -70,13 +70,15 @@ namespace :parse do
           mname = movie[0].strip.downcase
           myear = movie[1].strip
           
+		  person = Person.find_by_fname_and_lname(fname, lname)
+		  movie = Movie.where('LOWER(name)=? AND release_date BETWEEN ? AND ?', mname, "#{myear}-01-01", "#{myear}-12-31")
           # Create into Role table
-          if (!Person.find_by_fname_and_lname(fname, lname).nil? and !Movie.where('LOWER(name)=? AND release_date BETWEEN ? AND ?', mname, "#{myear}-01-01", "#{myear}-12-31").nil?)
+          if (!person.nil? and !movie.nil?)
             begin
               #puts "YOu are here"
-              ppid = Person.find_by_fname_and_lname(fname, lname).id
+              ppid = person.id
               # mmid = Movie.find_by_name(mname).id
-              m = Movie.where('LOWER(name)=? AND release_date BETWEEN ? AND ?', mname, "#{myear}-01-01", "#{myear}-12-31")
+              m = movie
               if m.length == 1     # found movie
                 mmid = m[0].id
               else

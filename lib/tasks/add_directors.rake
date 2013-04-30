@@ -95,11 +95,12 @@ namespace :parse do
 				  rescue ActiveRecord::RecordNotUnique
 					  puts "duplicate record (not inserting): #{ppid}"
 				  end
-				
-			  end
-		  rescue Exception =>e
-			  puts "#{e}"
-		  end
+
+			end
+		rescue Exception =>e
+			puts "#{e}"
+		end
+
       #break if idx >= 100000
       #puts
       

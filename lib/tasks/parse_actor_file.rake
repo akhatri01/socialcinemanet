@@ -55,7 +55,7 @@ namespace :parse do
       next if fname == '' && mname == '' && lname == ''
       begin
         p = Person.create(fname: fname, mname: mname, lname: lname)
-        # tmdb_person = tmdb_find_person(p, fname, mname, lname)
+        tmdb_person = tmdb_find_person(p, fname, mname, lname)
       rescue ActiveRecord::RecordNotUnique
         puts row[1]
         puts "duplicate record (not inserting): #{fname} #{mname} #{lname}"
@@ -89,7 +89,7 @@ namespace :parse do
       next if fname == '' && mname == '' && lname == ''
       begin
         p = Person.create(fname: fname, mname: mname, lname: lname)
-        # tmdb_person = tmdb_find_person(p, fname, mname, lname)
+        tmdb_person = tmdb_find_person(p, fname, mname, lname)
       rescue ActiveRecord::RecordNotUnique
         puts row[1]
         puts "duplicate record (not inserting): #{fname} #{mname} #{lname}"

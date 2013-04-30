@@ -1,0 +1,26 @@
+<table>
+  <thead>
+    <tr>
+      <td>Name</td>
+      <td>Year</td>
+      <td>IMDB Rating</td>
+      <td>Genre</td>
+    </tr>
+  </thead>
+<% @movies.each do |movie| %>
+  <tr>
+    <td>
+      <%= movie.name %>
+    </td>
+    <td>
+      <%= movie.release_date.year %>
+    </td>
+    <td class="imdb-rating">
+      <%= movie.imdb_rating || "N/A" %>
+    </td>
+    <td>
+      <%= movie.genre[0].category %>
+    </td>
+</tr>
+<% end %>
+</table>
