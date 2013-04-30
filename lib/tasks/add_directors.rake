@@ -19,88 +19,88 @@ namespace :parse do
 	  count = 1
     csv.each_with_index do |row, idx|
 	
-		#compacting the row (deleting nil values from the array)
-		row.compact!
+		  #compacting the row (deleting nil values from the array)
+		  row.compact!
 	
-		#Ignoring the empty lines
-	  if (row.length == 0)
-		#puts "Empty Line--------------------------------"
-		next
-	  end
+		  #Ignoring the empty lines
+	    if (row.length == 0)
+		    #puts "Empty Line--------------------------------"
+		    next
+	    end
 	  
-	# Ignoring the TV shows
+	    # Ignoring the TV shows
       if (row[0].split[0]=="Ignore" or (row[1] and row[1].split[0]=="Ignore"))
-        #puts "Found Ingore --------------"
-		next
+          #puts "Found Ingore --------------"
+		      next
       end
 	  
-	  #puts row
-	  #reading raw person and raw month_year name
-		if(row.length > 1)
-			rpname = row[0]
-			rmy = row[1]		
-		else
-			rmy = row[0]
-		end
+	    #puts row
+	    #reading raw person and raw month_year name
+		  if(row.length > 1)
+			  rpname = row[0]
+			  rmy = row[1]		
+		  else
+			  rmy = row[0]
+		  end
 		
-		#puts "#{rpname}. #{rmy}"
-		#parsing correctly the raw person name and raw movie_year name
-		mname = rmy.split('(')[0]
-		year = rmy[(rmy =~ /\(/) + 1, 4]
-		rpname_split = rpname.split(',');
+		  #puts "#{rpname}. #{rmy}"
+		  #parsing correctly the raw person name and raw movie_year name
+		  mname = rmy.split('(')[0]
+		  year = rmy[(rmy =~ /\(/) + 1, 4]
+		  rpname_split = rpname.split(',');
 		
-		#puts "You are here -----------------"
+		  #puts "You are here -----------------"
 		
-		if(rpname_split.length > 1)
-			lname = rpname_split[0]
-			fname = rpname_split[1]
-			has_lname = true
-		else
-			fname = rpname_split[0]
-			has_lname = false
+		  if(rpname_split.length > 1)
+			  lname = rpname_split[0]
+			  fname = rpname_split[1]
+			  has_lname = true
+		  else
+			  fname = rpname_split[0]
+			  has_lname = false
 		
-		end
+		  end
 		
-		#puts "#{fname} #{lname}, #{mname}, #{year}" if has_lname
-		#puts "#{fname} , #{mname}, #{year}" if !has_lname
-		fname.strip!
-		lname.strip! if has_lname
-		mname.strip!
-		year.strip!
+		  #puts "#{fname} #{lname}, #{mname}, #{year}" if has_lname
+		  #puts "#{fname} , #{mname}, #{year}" if !has_lname
+		  fname.strip!
+		  lname.strip! if has_lname
+		  mname.strip!
+		  year.strip!
 		
-		#inserting in the database now
-		begin
-			person = nil
-			if(has_lname)
-				person = Person.find_by_fname_and_lname(fname, lname)
-			else
-				person = Person.find_by_fname(fname)
-			end
-			movie  = Movie.where('LOWER(name)=? AND release_date BETWEEN ? AND ?', mname, "#{year}-01-01", "#{year}-12-31")
+		  #inserting in the database now
+		  begin
+			  person = nil
+			  if(has_lname)
+				  person = Person.find_by_fname_and_lname(fname, lname)
+			  else
+				  person = Person.find_by_fname(fname)
+			  end
+			  movie  = Movie.where('LOWER(name)=? AND release_date BETWEEN ? AND ?', mname, "#{year}-01-01", "#{year}-12-31")
 			
-			if(!person.nil? and !movie.nil?)
-				begin
-					#puts "YOu are here"
-					ppid = person.id
-					if movie.length == 1     # found movie
-						mmid = movie[0].id
-					else
-						# movie not found, move on
-						next
-					end
-					Role.create(mid: mmid, pid: ppid, role_name: 'director')
-					puts "#{count} Row Inserted out of #{idx} reads"
-					count += 1
+			  if(!person.nil? and !movie.nil?)
+				  begin
+					  #puts "YOu are here"
+					  ppid = person.id
+					  if movie.length == 1     # found movie
+						  mmid = movie[0].id
+					  else
+						  # movie not found, move on
+						  next
+					  end
+					  Role.create(mid: mmid, pid: ppid, role_name: 'director')
+					  puts "#{count} Row Inserted out of #{idx} reads"
+					  count += 1
 	
-				rescue ActiveRecord::RecordNotUnique
-					puts "duplicate record (not inserting): #{ppid}"
-				end
+				  rescue ActiveRecord::RecordNotUnique
+					  puts "duplicate record (not inserting): #{ppid}"
+				  end
 				
-			end
-		rescue Exception =>e
-			puts "#{e}"
-		end
-      break if idx >= 100000
+			  end
+		  rescue Exception =>e
+			  puts "#{e}"
+		  end
+      #break if idx >= 100000
       #puts
       
       #puts row[1]
