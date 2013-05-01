@@ -1,0 +1,52 @@
+
+<h1>Movies</h1>
+<table>
+	<thead>
+		<td>Title</td>
+		<td>Year</td>
+	</thead>
+<% @movie_result.each do |movie|%>
+	<tr>
+		<td><%=movie.name%></td>
+		<td><%=movie.release_date.year%></td>
+	</tr>
+<%end%>
+</table>
+
+
+<h1>Genres</h1>
+<table>
+	<thead>
+		<td>Genre Name</td>
+	</thead>
+	
+<% @genre_result.each do |genre|%>
+	<tr>
+		<td><%=genre.category%></td>
+</tr>
+<%end%>
+</table>
+
+<h1>Movie Persons</h1>
+<table>
+	<thead>
+		<td>Name</td>
+	</thead>
+<% @person_result.each do |person|%>
+<tr>
+	<td><%=person.fname + " " + person.mname + " " + person.lname%></td>
+</tr>
+<%end%>
+</table>
+
+<h1>Oscars</h1>
+<table>
+	<thead>
+		<td>Oscar Name</td>
+	</thead>
+<% @oscar_result.each do |oscar|%>
+<tr>
+	<td><%=oscar.category%></td>
+</tr>
+<%end%>
+</table>

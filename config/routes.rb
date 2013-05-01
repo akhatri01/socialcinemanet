@@ -1,35 +1,8 @@
 SocialCinemaNet::Application.routes.draw do
-  resources :modifies
 
-
-  resources :ratings
-
-
-  resources :classifieds
-
-
-  resources :m_nominateds
-
-
-  resources :p_nominateds
-
-
-  resources :roles
-
-
-  resources :users
-
-
-  resources :oscars
-
-
-  resources :genres
-
-
-  resources :movies
-
-
-  resources :people
+  match 'search' => 'info#search'
+  
+  match 'advanced_search' => 'info#advanced_search'
   
 
   root :to => 'info#index'
