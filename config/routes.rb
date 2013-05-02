@@ -4,6 +4,11 @@ SocialCinemaNet::Application.routes.draw do
   
   match 'advanced_search' => 'info#advanced_search'
   
+  match 'register' => 'users#register', :via => :get
+  match 'register' => 'users#create_user', :via => :post, :as => 'create_user'
+  match 'logout' => 'users#logout', :via => :delete, :as => 'logout'
+  match 'login' => 'users#new_session', :via => :post, :as => 'new_session'
+  match 'login' => 'users#login', :as => 'login'
 
   root :to => 'info#index'
 

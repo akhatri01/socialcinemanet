@@ -245,3 +245,55 @@ table {
     }
   }
 }
+
+label {
+  display: block;
+}
+
+#users-header {
+  width: 300px;
+  padding: 0 10px;
+  margin: 100px auto 0;
+  text-align: center;
+}
+#users-content {
+  width: 300px;
+  padding: 10px;
+  margin: 0 auto;
+  text-align: center;
+  h1 {
+    margin: 0; padding: 0;
+    font-size: 100%;
+    font-weight: normal;
+    font-family: 'Myriad Pro', Arial;
+    color: #a6afb9;
+  }
+  form {
+    margin: 10px 0 0 0;
+    .users-field {
+      width: 100%;
+      height: 28px;
+      border: 1px solid #a6afb9;
+      padding: 0 5px;
+      font-size: 80%;
+    }
+    .submit {
+      width: 312px;
+      height: 28px;
+      padding: 0 5px;
+      margin: 0;
+      outline: none;
+      border: 1px solid #000;
+      @include linear-gradient(#adc0ff 0%, #3e549d 4%, #1e306d 100%, $fallback: #1e306d);
+      @include border-right-radius(2px);
+      color: white;
+      font-size: 80%;
+      &:hover {
+        @include linear-gradient(#adc0ff 0%, #1e306d 4%, #3e549d 100%, $fallback: #3e549d);
+      }
+      &:active {
+        @include linear-gradient(#adc0ff 0%, #1e306d 4%, #3e549d 100%, $fallback: #3e549d);
+      }
+    }
+  }
+}

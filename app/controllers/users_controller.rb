@@ -1,4 +1,48 @@
 class UsersController < ApplicationController
+  layout 'users'
+  
+  def register
+    if !logged_in?
+      @user = User.new
+    else
+      redirect_to root_url
+    end
+  end
+  
+  def create_user
+    @user = User.new(params[:user])
+    if @user.save
+      @welcome = true
+      session[:current_user_id] = @user.id
+      redirect_to root_url
+    else
+      render 'register'
+    end
+  end
+  
+  def login
+    @user = User.new
+  end
+  
+  def new_session
+    @user = User.new(params[:user])
+    @user = User.where "email=? AND password=?", @user.email, @user.password
+    if @user.size == 1
+      @user = @user[0]
+      session[:current_user_id] = @user.id
+      redirect_to root_url
+    else
+      @user = User.new(params[:user])
+      @error = true
+      render 'login'
+    end
+  end
+  
+  def logout
+    session[:current_user_id] = nil
+    redirect_to root_url
+  end
+  
   # GET /users
   # GET /users.json
   def index

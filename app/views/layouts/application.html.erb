@@ -12,9 +12,14 @@
     <div class="container">
       <div id="user-links">
         <ul>
-          <li><%= link_to 'Register', '#' %></li>
-          <li><%= link_to 'Login', '#' %></li>
-          <li><%= link_to 'Help', '#' %></li>
+          <% if @logged_in %>
+            <li><%= link_to 'Logout', logout_path, :method => :delete %></li>
+            <li><%= link_to 'Help', '#' %></li>
+          <% else %>
+            <li><%= link_to 'Register', '/register' %></li>
+            <li><%= link_to 'Login', '/login' %></li>
+            <li><%= link_to 'Help', '#' %></li>
+          <% end %>
         </ul>
       </div>
       <div id="logo"><%= image_tag 'logo.png' %><!-- SocialCinemaNet --></div>
