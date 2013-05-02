@@ -8,4 +8,7 @@ class User < ActiveRecord::Base
   validates_presence_of :password
   
   validates_uniqueness_of :email
+  
+  has_many :u_ratings, :foreign_key => :uid
+  has_many :rated_movies, :through => :u_ratings, :source => :movie
 end

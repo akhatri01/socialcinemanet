@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130401060648) do
+ActiveRecord::Schema.define(:version => 20130502152952) do
 
   create_table "classifieds", :id => false, :force => true do |t|
     t.integer  "mid",        :default => 0, :null => false
@@ -50,7 +50,6 @@ ActiveRecord::Schema.define(:version => 20130401060648) do
     t.datetime "updated_at",   :null => false
   end
 
-  add_index "movies", ["name", "release_date"], :name => "name_date", :unique => true
   add_index "movies", ["name", "release_date"], :name => "name_date_constraint", :unique => true
 
   create_table "oscars", :force => true do |t|
@@ -83,6 +82,8 @@ ActiveRecord::Schema.define(:version => 20130401060648) do
     t.datetime "updated_at", :null => false
   end
 
+  add_index "persons", ["fname", "mname", "lname"], :name => "persons_unique_constraint", :unique => true
+
   create_table "ratings", :id => false, :force => true do |t|
     t.integer  "uid",        :default => 0, :null => false
     t.integer  "mid",        :default => 0, :null => false
@@ -113,6 +114,16 @@ ActiveRecord::Schema.define(:version => 20130401060648) do
   end
 
   add_index "u_modify", ["mid"], :name => "mid"
+
+  create_table "u_ratings", :force => true do |t|
+    t.integer  "uid"
+    t.integer  "mid"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.float    "rating"
+  end
+
+  add_index "u_ratings", ["uid", "mid"], :name => "unique_user_rating", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "fname"

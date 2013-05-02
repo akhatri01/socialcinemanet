@@ -1,6 +1,23 @@
 class Movie < ActiveRecord::Base
   attr_accessible :imdb_rating, :length, :name, :release_date
   
+  has_many :u_ratings, :foreign_key => :mid
+  has_many :users_rated, :through => :u_ratings, :source => :user
+  
+  def user_rating
+    sum = 0
+    cnt = 0
+    self.u_ratings.each do |u_rating|
+      sum += u_rating.rating
+      cnt += 1
+    end
+    if cnt > 0
+      return sum / cnt
+    else
+      return nil
+    end
+  end
+  
   def self.movie_tables(idx, sort_by)
     if sort_by == 'year'
       Movie.find_by_sql [

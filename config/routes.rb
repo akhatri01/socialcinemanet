@@ -1,5 +1,8 @@
 SocialCinemaNet::Application.routes.draw do
 
+  resources :u_ratings
+
+
   match 'search' => 'info#search'
   
   match 'advanced_search' => 'info#advanced_search'
