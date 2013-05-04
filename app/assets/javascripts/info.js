@@ -4,13 +4,11 @@ $(document).ready(function() {
     document.location.href = '/?sort_by=' + sort_option;
   });
 
-  $(".search-submit").click(function(){
-      // alert("Hello");
-      
-      var search_val = $(this).parent().find(".search").val();
-      document.location.href = '/search?search_val=' + search_val;
-      
-    });
+  $("#search-form").submit(function(e){
+    var search_val = $(this).parent().find(".search").val();
+    e.preventDefault();
+    document.location.href = '/search?search_val=' + search_val;
+  });
 });
 
 // function searchSubmit() {
