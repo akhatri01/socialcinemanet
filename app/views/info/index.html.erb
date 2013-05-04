@@ -11,6 +11,7 @@
 <table>
   <thead>
     <tr>
+      <td>ID</td>
       <td>Title</td>
       <td>Year</td>
       <td>IMDB Rating</td>
@@ -21,7 +22,10 @@
 <% @movies.each do |movie| %>
   <tr>
     <td>
-      <%= movie.name.titleize %>
+      <%= movie.id %>
+    </td>
+    <td>
+      <%= link_to movie.name.titleize, movie_show_path(movie.id) %>
     </td>
     <td>
       <%= movie.release_date.year %>

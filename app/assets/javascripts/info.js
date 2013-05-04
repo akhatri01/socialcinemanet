@@ -31,3 +31,26 @@ function add_movie_person_block() {
     "</div>"
   );
 }
+
+function rate_it_edit_imdb_url(curr_url) {
+  $('#edit-imdb-url-row').find('.right').html("<form id='new-imdb-url-wrap' action=''><input type='text' id='new-imdb-url' placeholder='IMDB url' value='" + curr_url + "'><input type='submit' class='submit'></form>");
+  $('#edit-imdb-url-row').find('.right').find('#new-imdb-url').focus();
+  var curr_id = parseInt($('.movie').attr('id').split('movie_')[1]);
+  $('#new-imdb-url-wrap').find('.submit').click(function() {
+    $.ajax({
+      type: "POST",
+      url: "/movie/imdb/update",
+      data: {imdb_url: $('#new-imdb-url').val(), id: curr_id},
+      success: function(resp) {
+        // alert(resp);
+        // $('#edit-imdb-url-row').find('.right').html(resp);
+        $('.movie').html(resp);
+      }
+    });
+    return false;
+  });
+}
+
+
+
+

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130502152952) do
+ActiveRecord::Schema.define(:version => 20130503142857) do
 
   create_table "classifieds", :id => false, :force => true do |t|
     t.integer  "mid",        :default => 0, :null => false
@@ -48,9 +48,15 @@ ActiveRecord::Schema.define(:version => 20130502152952) do
     t.integer  "length"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "imdb_url"
+    t.string   "poster_url"
+    t.text     "plot"
   end
 
+  add_index "movies", ["imdb_rating", "name"], :name => "movie_imdb_index"
   add_index "movies", ["name", "release_date"], :name => "name_date_constraint", :unique => true
+  add_index "movies", ["name"], :name => "movie_name_index"
+  add_index "movies", ["release_date", "name"], :name => "movie_year_index"
 
   create_table "oscars", :force => true do |t|
     t.string   "category"

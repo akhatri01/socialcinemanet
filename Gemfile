@@ -9,6 +9,7 @@ gem 'mysql2'
 gem 'unicode'
 gem 'unidecoder'
 gem 'nokogiri'
+gem 'imdb'
 
 # Gems used only for assets and not required
 # in production environments by default.

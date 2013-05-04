@@ -12,6 +12,11 @@ SocialCinemaNet::Application.routes.draw do
   match 'logout' => 'users#logout', :via => :delete, :as => 'logout'
   match 'login' => 'users#new_session', :via => :post, :as => 'new_session'
   match 'login' => 'users#login', :as => 'login'
+  
+  match 'rate' => 'info#rate_it'
+  
+  match 'movie/imdb/update' => 'info#ajax_imdb_update'
+  match 'movie/:id' => 'movies#show', :as => 'movie_show'
 
   root :to => 'info#index'
 

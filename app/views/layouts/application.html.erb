@@ -21,19 +21,19 @@
             <li><%= link_to 'Help', '#' %></li>
         </ul>
       </div>
-      <div id="logo"><%= image_tag 'logo.png' %><!-- SocialCinemaNet --></div>
+      <div id="logo"><%= image_tag 'logo.png', :width => 188, :height => 21 %><!-- SocialCinemaNet --></div>
       <div id="search">
         <input type="text" class="search"><input type="submit" value="Search" class="search-submit">
 		<%= link_to 'advanced search', '/advanced_search', :class => "advanced-search-link" %>
       </div>
       <div id="nav" class="clearfix">
         <ul class="clearfix">
-          <li><%= link_to 'Home', '#' %></li>
+          <li><%= link_to 'Home', root_path %></li>
           <li><%= link_to 'Movies', '#' %></li>
           <li><%= link_to 'Genres', '#' %></li>
           <li><%= link_to 'Actors', '#' %></li>
           <li><%= link_to 'Directors', '#' %></li>
-          <li><%= link_to 'Rate It!', '#' %></li>
+          <li><%= link_to 'Rate It!', '/rate' %></li>
           <li><%= link_to 'Movie Update', '#' %></li>
           <li><%= link_to 'Notifications', '#' %></li>
         </ul>

@@ -1,0 +1,71 @@
+<%#= expects local movie %>
+
+  <div class="movie-poster">
+    <% if movie.poster_url %>
+      <%= image_tag movie.poster_url %>
+    <% else %>
+      <%= image_tag 'no_pic.gif', :width => 200, :height => 300 %>
+    <% end %>
+  </div>
+  <div class="movie-header">
+    <div class="movie-title">
+      <%= movie.name.titleize %>
+    </div>
+    <div class="row clearfix">
+      <div class="left">
+        Year
+      </div>
+      <div class="right">
+        <%= movie.release_date.year %>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="left">
+        IMDB Rating
+      </div>
+      <div class="right">
+        <%= movie.imdb_rating || '-' %>
+      </div>
+    </div>
+    <div class="row clearfix" id="edit-imdb-url-row">
+      <div class="left">
+        IMDB URL
+      </div>
+      <div class="right">
+        <%= movie.imdb_url || '- ' %>
+        <br />
+        <%= link_to_function 'Edit URL', "rate_it_edit_imdb_url(\"#{movie.imdb_url || ''}\")", :id => 'edit-imdb-url' %> <span class="small-info">(updates movie information)</span>
+        <br />
+        <% if @imdb_url_not_found %>
+        <span style="color:red;font-size:8pt;">Could not find movie with the provided IMDB url. Please try again.</span>
+        <% end %>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="left">
+        SCN User Rating
+      </div>
+      <div class="right">
+        <%= movie.user_rating || 0 %>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="left">
+        Length
+      </div>
+      <div class="right">
+        <%= movie.length || 0 %>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="left">
+        Plot
+      </div>
+      <div class="right">
+        <%= movie.plot || '-' %>
+      </div>
+    </div>
+    <!-- <% if @imdb_url %>
+      <%= link_to 'IMDB', movie_url %>
+    <% end %> -->
+  </div>

@@ -4,6 +4,10 @@ class Movie < ActiveRecord::Base
   has_many :u_ratings, :foreign_key => :mid
   has_many :users_rated, :through => :u_ratings, :source => :user
   
+  has_many :roles, :foreign_key => :mid
+  has_many :persons, :through => :roles, :source => :person
+  
+  
   def user_rating
     sum = 0
     cnt = 0
@@ -22,7 +26,7 @@ class Movie < ActiveRecord::Base
     if sort_by == 'year'
       Movie.find_by_sql [
         "SELECT * 
-        FROM movies 
+        FROM movies FORCE INDEX (movie_year_index)
         WHERE name <> '' 
         AND name IS NOT null 
         ORDER BY YEAR(release_date), name 
@@ -32,17 +36,18 @@ class Movie < ActiveRecord::Base
     elsif sort_by == 'imdb_rating'
       Movie.find_by_sql [
         "SELECT * 
-        FROM movies 
+        FROM movies FORCE INDEX (movie_imdb_index)
         WHERE name <> '' 
         AND name IS NOT null 
-        ORDER BY imdb_rating DESC, name 
+        AND imdb_rating IS NOT null
+        ORDER BY imdb_rating DESC, name
         LIMIT ?,?", 
         (idx-1)*20, 20
       ]
     elsif sort_by == 'genre'
       Movie.find_by_sql [
         "SELECT * 
-        FROM movies 
+        FROM movies
         WHERE name <> '' 
         AND name IS NOT null 
         ORDER BY imdb_rating DESC, name 
@@ -52,7 +57,7 @@ class Movie < ActiveRecord::Base
     else
       Movie.find_by_sql [
         "SELECT * 
-        FROM movies 
+        FROM movies FORCE INDEX (movie_name_index)
         WHERE name <> '' 
         AND name IS NOT null 
         ORDER BY name 
