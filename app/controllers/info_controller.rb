@@ -92,6 +92,7 @@ class InfoController < ApplicationController
         movie.imdb_url = imdb_url
         movie.poster_url = imdb_movie.poster
         movie.imdb_rating = imdb_movie.rating
+        movie.plot = imdb_movie.plot
         movie.release_date = DateTime.strptime(imdb_movie.year.to_s, "%Y")
         movie.save
       end
