@@ -53,14 +53,42 @@ class InfoController < ApplicationController
   end
   
   def advanced_search_result
-    movie_person_flag = nil
-    movie_flag = nil
-    genre_flag = nil
-    oscar_flag = nil
+    @movie_person_flag = false
+    @movie_flag = false
+    @genre_flag = false
+    @oscar_flag = false
     
-    params["movie_persons"].each |movie_person| do 
-      puts movie_person["fname"]
+    params["movie_persons"].each  do |person|
+      if(person["fname"]!="" || person["mname"] !="" || person["lname"]!="") then
+        @movie_person_flag = true
+      end
     end
+    
+    movie = params["movie"]
+    if(movie['movie_title']!='' || movie['movie_year']!='' || movie['imdb_rating']!='' || movie['user_rating']!='') then
+      @movie_flag = true
+    end
+    
+    if(params["genre"]['genre_category']!='') then
+      @genre_flag = true
+    end
+    
+    oscar = params["oscar"]
+    if(oscar['oscar_category']!='' || oscar['start_year']!='' || oscar['end_year']!='') then
+      @oscar_flag = true
+    end
+    
+    puts @movie_person_flag
+    # puts @movie_flag
+    # puts @genre_flag
+    # puts @oscar_flag
+    
+    if(@movie_person_flag) then
+      @advanced_movie_result = Advanced_search.search_by_name(params["movie_persons"])
+    else
+      @advanced_movie_result = []
+    end
+    
     @fname = params["movie_persons"].length
     render :partial => "advanced_search_result"
   end

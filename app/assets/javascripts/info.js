@@ -51,9 +51,19 @@ $(document).ready(function() {
 		
 		//alert(JSON.stringify(params));
     // document.location.href = '/advanced_search_result?' + JSON.stringify(params);
-	$.post("/advanced_search_result", params).done(function(response){
-		$("#content").find(".container").html(response);
-	});
+	/*$.post("/advanced_search_result", params).done(function(response){
+			$("#content").find(".container").html(response);
+		});*/
+	
+		$.ajax({
+		    type: "POST",
+		    url: "/advanced_search_result",
+		    data: JSON.stringify(params),
+		    contentType: "application/json",
+		    success: function(response){
+		          $("#content").find(".container").html(response);
+		      }
+		  });
   });
 });
 
