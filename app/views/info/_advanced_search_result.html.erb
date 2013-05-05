@@ -7,7 +7,7 @@ Advanced Search Result
 	<thead>
 		<td>Title</td>
 	</thead>
-<% @advanced_movie_result.each do |movie|%>
+		<% @advanced_movie_result.each do |movie|%>
 	<tr>
 		<td><%= link_to movie.name, movie_show_path(movie.id) %></td>
 	</tr>

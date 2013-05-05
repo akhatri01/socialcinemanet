@@ -1,7 +1,6 @@
 class Advanced_search < ActiveRecord::Base
   
   def self.search_by_name(name_list)
-    movie_result = 
     person_size = name_list.size
     predicate = ""
     name_list.each_with_index do |name, index|
@@ -20,10 +19,9 @@ class Advanced_search < ActiveRecord::Base
 
     if(predicate.length > 0) then
       Movie.find_by_sql [
-        "select dt.name from (select m.name, p.fname from movies m, persons p, roles r where m.id = 
-        r.mid and r.pid = p.id and m.name is not null and m.name <>'' and
-         ?) dt group by dt.name
-          having count(*) = ?", predicate, name_list.length
+        "select dt.id, dt.name from (select m.id, m.name, p.fname from movies m, persons p, roles r where m.id = 
+        r.mid and r.pid = p.id and m.name is not null and m.name <>'' and " + predicate + ") dt group by dt.id, dt.name
+          having count(*) = ?", name_list.length
       ]
     else
       nil
