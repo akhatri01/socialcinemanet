@@ -9,6 +9,52 @@ $(document).ready(function() {
     e.preventDefault();
     document.location.href = '/search?search_val=' + search_val;
   });
+
+ $("#advanced-search-form").submit(function(e){
+    // var search_val = $(this).parent().find(".search").val();
+    e.preventDefault();
+		var params = {};
+		var person_array = [];
+		$("#advanced-search-form").find(".movie-person-block").each(function(count){
+			var person_hash =  {};
+			$(this).find("input").each(function(input_elem){
+				if($(this).attr("class")==="actor" && $(this).is(':checked')===true)
+					person_hash[$(this).attr("class")] = true;
+				else if($(this).attr("class")==="director" && $(this).is(':checked')===true)
+					person_hash[$(this).attr("class")] = true;
+				else
+					person_hash[$(this).attr("class")] = $(this).val();
+				// alert(param);
+			});
+			person_array.push(person_hash);
+		});
+		params["movie_persons"] = person_array;
+		
+		var movie_hash = {};
+		$("#advanced-search-form").find(".movie").find("input").each(function(){
+			movie_hash[$(this).attr("id")] = $(this).val();
+		});
+		params["movie"] = movie_hash;
+		
+		var genre_hash = {};
+		$("#advanced-search-form").find(".genre").find("input").each(function(){
+			genre_hash[$(this).attr("id")] = $(this).val();
+		});
+		params["genre"] = genre_hash;
+		
+		var oscar_hash = {};
+		$("#advanced-search-form").find(".oscar").find("input").each(function(){
+			oscar_hash[$(this).attr("id")] = $(this).val();
+		});
+		params["oscar"] = oscar_hash;
+		
+		
+		//alert(JSON.stringify(params));
+    // document.location.href = '/advanced_search_result?' + JSON.stringify(params);
+	$.post("/advanced_search_result", params).done(function(response){
+		$("#content").find(".container").html(response);
+	});
+  });
 });
 
 // function searchSubmit() {
@@ -20,12 +66,12 @@ $(document).ready(function() {
 function add_movie_person_block() {
   $('.movie-person-block').last().after(
     "<div class=\"movie-person-block\">" + 
-    	"<input type=\"text\" id=\"fname\" placeholder=\"First Name\">" +
-    	"<input type=\"text\" id=\"mname\" placeholder=\"Middle Name\">" + 
-    	"<input type=\"text\" id=\"lname\" placeholder=\"Last Name\">" +
+    	"<input type=\"text\" class=\"fname\" placeholder=\"First Name\">" +
+    	"<input type=\"text\" class=\"mname\" placeholder=\"Middle Name\">" + 
+    	"<input type=\"text\" class=\"lname\" placeholder=\"Last Name\">" +
     	"<br />" +
-    	"<label><input type=\"checkbox\" value=\"actor\" id=\"actor\"> Actor?</label>" +
-    	"<label><input type=\"checkbox\" value=\"director\" id=\"director\"> Director?</label>" +
+    	"<label><input type=\"checkbox\" value=\"actor\" class=\"actor\"> Actor?</label>" +
+    	"<label><input type=\"checkbox\" value=\"director\" class=\"director\"> Director?</label>" +
     "</div>"
   );
 }

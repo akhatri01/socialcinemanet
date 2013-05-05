@@ -52,6 +52,19 @@ class InfoController < ApplicationController
     
   end
   
+  def advanced_search_result
+    movie_person_flag = nil
+    movie_flag = nil
+    genre_flag = nil
+    oscar_flag = nil
+    
+    params["movie_persons"].each |movie_person| do 
+      puts movie_person["fname"]
+    end
+    @fname = params["movie_persons"].length
+    render :partial => "advanced_search_result"
+  end
+  
   def rate_it
     while (@movie = Movie.where("name is not null and name <> ''").offset(rand(Movie.count)).first) == nil
       next

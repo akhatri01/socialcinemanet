@@ -13,6 +13,7 @@
       <div id="user-links">
         <ul>
           <% if @logged_in %>
+			<li><%= @current_user.lname%></li>
             <li><%= link_to 'Logout', logout_path, :method => :delete %></li>
           <% else %>
             <li><%= link_to 'Register', '/register' %></li>
@@ -42,7 +43,7 @@
   </div>
 
   <div id="content">
-    <div id="content" class="container">
+    <div class="container">
       <%= yield %>
     </div>
   </div>

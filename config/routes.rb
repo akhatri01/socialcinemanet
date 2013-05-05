@@ -6,6 +6,7 @@ SocialCinemaNet::Application.routes.draw do
   match 'search' => 'info#search'
   
   match 'advanced_search' => 'info#advanced_search'
+  match 'advanced_search_result' => 'info#advanced_search_result'
   
   match 'register' => 'users#register', :via => :get
   match 'register' => 'users#create_user', :via => :post, :as => 'create_user'
