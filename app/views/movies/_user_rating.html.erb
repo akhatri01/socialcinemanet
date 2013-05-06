@@ -1,0 +1,7 @@
+<%= movie.user_rating || 0 %>
+<% if movie.user_rating %>
+<span style="font-weight: normal; color: #999;">
+  &middot;
+  <% count = movie.u_ratings.count %>
+  <%= count %><%= count > 1 ? ' votes' : ' vote' %></span>
+<% end %>

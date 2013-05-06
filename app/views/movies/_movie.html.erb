@@ -2,11 +2,23 @@
 
   <div class="movie-poster">
     <% if movie.poster_url %>
-      <%= image_tag movie.poster_url %>
+      <%= image_tag movie.poster_url, :width => 200 %>
     <% else %>
       <%= image_tag 'no_pic.gif', :width => 200, :height => 300 %>
     <% end %>
   </div>
+  <% if @logged_in %>
+    <div id="user-rate">
+      <div class="movie-title">
+        Rate This Movie
+      </div>
+      <form id="rate-this-movie" class="clearfix" action="#" onSubmit="rate_this_movie_submit(); return false;">
+        <input type="text" class="rating" maxlength="3"><span>&nbsp;&nbsp;/ 10</span>
+        <input type="submit" class="submit-rating" value="Rate!">
+      </form>
+      <div class="error">please enter a valid score (0 - 10)</div>
+    </div>
+  <% end %>
   <div class="movie-header">
     <div class="movie-title">
       <%= movie.name.titleize %>
@@ -45,8 +57,8 @@
       <div class="left">
         SCN User Rating
       </div>
-      <div class="right">
-        <%= movie.user_rating || 0 %>
+      <div class="right user-rating-data">
+        <%= render :partial => 'movies/user_rating', :locals => {:movie => movie } %>
       </div>
     </div>
     <div class="row clearfix">

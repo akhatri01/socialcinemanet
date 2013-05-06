@@ -105,6 +105,25 @@ function rate_it_edit_imdb_url(curr_url) {
   });
 }
 
+function rate_this_movie_submit() {
+  var rating = parseInt($("#rate-this-movie").find('.rating').val());
+  var curr_id = parseInt($('.movie').attr('id').split('movie_')[1]);
+  if (rating >= 0 && rating <= 10) {
+    $.ajax({
+      type: "POST",
+      url: "/movie/" + curr_id + "/rate",
+      data: JSON.stringify({rating: rating, id: curr_id}),
+      contentType: "application/json",
+      success: function(resp){
+        $('#user-rate').find('.error').hide();
+        $('.movie').html(resp);
+      }
+    });
+  } else {
+    $('#user-rate').find('.error').show();
+  }
+  return false;
+}
 
 
 

@@ -248,11 +248,60 @@ body {
         max-width: 200px;
       }
     }
+    #user-rate {
+      float: right;
+      margin: 0 0 0 10px;
+      .error {
+        color: red;
+        font-size: 80%;
+        display: none;
+      }
+      #rate-this-movie {
+        span {
+          font-size: 100%;
+          line-height: 35px;
+          padding: 15px 0 0 0;
+          font-weight: bold;
+          color: #666;
+        }
+        .rating {
+          width: 22px;
+          height: 20px;
+          padding: 5px 3px;
+          margin: 10px 0 0 0;
+          font-size: 100%;
+          text-align: center;
+          outline: none;
+          border: 1px solid #a6afba;
+          @include border-radius(2px);
+          
+          &:focus {
+            border: 1px solid #3e549d;
+          }
+        }
+        .submit-rating {
+          margin: 10px 0 0 10px;
+          padding: 0 10px;
+          @include linear-gradient(#adc0ff 0%, #3e549d 4%, #1e306d 100%, $fallback: #1e306d);
+          outline: none;
+          border: 1px solid #000;
+          @include border-radius(2px);
+          color: white;
+          text-align: center;
+          font-size: 75%;
+          line-height: 32px;
+          height: 32px;
+          &:hover {
+            @include linear-gradient(#adc0ff 0%, #1e306d 4%, #3e549d 100%, $fallback: #3e549d);
+          }
+        }
+      }
+    }
     .movie-header {
       float: left;
       display: block;
       margin: 5px 0 0 10px;
-      max-width: 700px;
+      width: 525px;
       
       .row {
         margin: 10px 0 0 0;
