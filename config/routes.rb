@@ -18,6 +18,7 @@ SocialCinemaNet::Application.routes.draw do
   
   match 'movie/imdb/update' => 'info#ajax_imdb_update'
   match 'movie/:id' => 'movies#show', :as => 'movie_show'
+  match 'movie/:id/rate' => 'movies#rate', :as => 'movie_rate'
 
   root :to => 'info#index'
 

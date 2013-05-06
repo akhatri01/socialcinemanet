@@ -21,6 +21,22 @@ class MoviesController < ApplicationController
       format.json { render json: @movie }
     end
   end
+  
+  def rate
+    @movie = Movie.find(params[:id])
+    urating = URating.where("uid = ? AND mid = ?", @current_user.id, params[:id].to_i).first
+    if !urating
+      urating = URating.new
+      urating.rating = params[:rating].to_f
+      urating.mid = params[:id].to_i
+      urating.uid = @current_user.id
+      urating.save
+    else
+      urating.rating = params[:rating].to_f
+      urating.save
+    end
+    render :partial => 'movies/movie', :locals => {:movie => @movie}
+  end
 
   # GET /movies/new
   # GET /movies/new.json
