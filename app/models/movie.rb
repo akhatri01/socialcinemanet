@@ -7,6 +7,12 @@ class Movie < ActiveRecord::Base
   has_many :roles, :foreign_key => :mid
   has_many :persons, :through => :roles, :source => :person
   
+  has_many :classifieds, :foreign_key => :mid
+  has_many :genres, :through => :classifieds, :source => :genre
+  
+  def self.top_250
+    # Movie.find_by_sql ["SELECT *, AVERAGE(u.rating) FROM movies FORCE INDEX (movie_name_index) JOIN u_ratings u ON u.mid = movies.id WHERE name <> '' AND name IS NOT null LIMIT 10"]
+  end
   
   def user_rating
     sum = 0
@@ -52,6 +58,20 @@ class Movie < ActiveRecord::Base
         AND name IS NOT null 
         ORDER BY imdb_rating DESC, name 
         LIMIT ?,?", 
+        (idx-1)*20, 20
+      ]
+    elsif sort_by == 'user_rating'
+      Movie.find_by_sql [
+        "SELECT m.* " +
+        "FROM (SELECT mid, AVG(rating) as avg FROM u_ratings FORCE INDEX (rating_index) GROUP BY mid ORDER BY avg DESC LIMIT ?,?) sq " + 
+        "LEFT JOIN movies m ON m.id = sq.mid AND m.name IS NOT null AND m.name <> ''", 
+        (idx-1)*20, 20
+      ]
+    elsif sort_by == 'user_rating_number'
+      Movie.find_by_sql [
+        "SELECT m.* " +
+        "FROM (SELECT mid, AVG(rating) as avg FROM u_ratings FORCE INDEX (rating_index) GROUP BY mid ORDER BY COUNT(rating) DESC, avg DESC LIMIT ?,?) sq " + 
+        "LEFT JOIN movies m ON m.id = sq.mid AND m.name IS NOT null AND m.name <> ''", 
         (idx-1)*20, 20
       ]
     else

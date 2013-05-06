@@ -3,4 +3,7 @@
   <div class="movie clearfix" id="movie_<%= @movie.id %>">
   <%= render :partial => 'movies/movie', :locals => {:movie => @movie } %>
   </div>
+  <a href="/rate" class="next-movie">
+    <%#= next movie button %>
+  </a>
 </div>

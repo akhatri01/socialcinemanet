@@ -1,23 +1,15 @@
-<h1>Listing genres</h1>
+<h1>Genres</h1>
 
 <table>
-  <tr>
-    <th>Category</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+  <thead>
+    <td>Category</td>
+    <td>Movie Count</td>
+  </thead>
 
-<% @genres.each do |genre| %>
+<% @genres_movie_counts.each do |key, val| %>
   <tr>
-    <td><%= genre.category %></td>
-    <td><%= link_to 'Show', genre %></td>
-    <td><%= link_to 'Edit', edit_genre_path(genre) %></td>
-    <td><%= link_to 'Destroy', genre, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= @genres[key].category %></td>
+    <td><%= number_with_delimiter val %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Genre', new_genre_path %>

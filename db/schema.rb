@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130503142857) do
+ActiveRecord::Schema.define(:version => 20130506021925) do
 
   create_table "classifieds", :id => false, :force => true do |t|
     t.integer  "mid",        :default => 0, :null => false
@@ -129,6 +129,7 @@ ActiveRecord::Schema.define(:version => 20130503142857) do
     t.float    "rating"
   end
 
+  add_index "u_ratings", ["mid"], :name => "fk_mid_u_ratings"
   add_index "u_ratings", ["uid", "mid"], :name => "unique_user_rating", :unique => true
 
   create_table "users", :force => true do |t|

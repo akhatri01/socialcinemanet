@@ -3,6 +3,11 @@ class GenresController < ApplicationController
   # GET /genres.json
   def index
     @genres = Genre.all
+    @genres_movie_counts = {}
+    @genres.each_with_index do |genre, idx|
+      @genres_movie_counts[idx] = genre.movies.count
+    end
+    @genres_movie_counts = @genres_movie_counts.sort_by do |key, val| val end .reverse
 
     respond_to do |format|
       format.html # index.html.erb

@@ -7,6 +7,8 @@ class InfoController < ApplicationController
     
     if @sort_by == 'imdb_rating'
       movie_count = Movie.where("name <> '' AND name IS NOT null AND imdb_rating IS NOT null").count
+    elsif @sort_by == 'user_rating' || @sort_by == 'user_rating_number'
+      movie_count = Movie.find_by_sql(["SELECT distinct mid FROM u_ratings FORCE INDEX (rating_index)"]).size 
     else
       movie_count = Movie.where("name <> '' AND name IS NOT null").count
     end
@@ -25,7 +27,7 @@ class InfoController < ApplicationController
       @page_nums = [ @idx - 2, @idx - 1, @idx, @idx + 1, @idx + 2]
     end
     
-   @movies = Movie.movie_tables(@idx, @sort_by)
+    @movies = Movie.movie_tables(@idx, @sort_by)
   end
   
   def search
@@ -121,7 +123,10 @@ class InfoController < ApplicationController
   end
   
   def rate_it
-    while (@movie = Movie.where("name is not null and name <> ''").offset(rand(Movie.count)).first) == nil
+    # while (@movie = Movie.where("name is not null and name <> ''").offset(rand(Movie.count)).first) == nil
+    #   next
+    # end
+    while (@movie = Movie.where("name is not null and name <> '' and imdb_url is not null").offset(rand(Movie.where("name is not null and name <> '' and imdb_url is not null").count)).first) == nil
       next
     end
     # /([a-zA-Z\d]*(\s[-a-zA-Z\d]*)*)\s\((.+)\)/ =~ @movie.name

@@ -4,7 +4,8 @@
     <option value="title" <%= if @sort_by == 'name' then "selected=\"selected\"" end %> >Title</option>
     <option value="year" <%= if @sort_by == 'year' then "selected=selected" end %> >Year</option>
     <option value="imdb_rating" <%= if @sort_by == 'imdb_rating' then "selected=selected" end %> >IMDB Rating</option>
-    <option value="user_rating" <%= if @sort_by == 'user_rating' then "selected=selected" end %> >User Rating</option>
+    <option value="user_rating" <%= if @sort_by == 'user_rating' then "selected=selected" end %> >User Rating (highest rated)</option>
+    <option value="user_rating_number" <%= if @sort_by == 'user_rating_number' then "selected=selected" end %> >User Rating (most rated)</option>
   </select>
 </div>
 
@@ -34,10 +35,10 @@
       <%= movie.imdb_rating || "-" %>
     </td>
     <td class="user-rating">
-      <%= movie.user_rating || "-" %>
+      <%= render :partial => 'movies/user_rating', :locals => {:movie => movie } %>
     </td>
     <td>
-      <%= movie.genre[0] ? movie.genre[0].category : "-" %>
+      <%= movie.genre[0].category rescue "-" %>
     </td>
 </tr>
 <% end %>

@@ -99,6 +99,7 @@ body {
     size: 1em;
     family: 'Myriad Pro', Arial;
   }
+  padding: 0 20px;
 }
 
 .container {
@@ -237,9 +238,21 @@ body {
 }
 
 #rate_it {
+  position: relative;
   h1 {
     font-size: 120%;
     font-family: 'Myriad Pro', Arial;
+  }
+  .next-movie {
+    display: block;
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 105px; height: 67px;
+    background: white image-url('next_btn.gif') top left no-repeat;
+    cursor: pointer;
+    &:hover {
+      background-position: 0 -67px;
+    }
   }
   .movie {
     .movie-poster {
@@ -251,6 +264,7 @@ body {
     #user-rate {
       float: right;
       margin: 0 0 0 10px;
+      width: 215px;
       .error {
         color: red;
         font-size: 80%;

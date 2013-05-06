@@ -1,4 +1,4 @@
-<%= movie.user_rating || 0 %>
+<%= movie.user_rating.round(1) rescue 0 %>
 <% if movie.user_rating %>
 <span style="font-weight: normal; color: #999;">
   &middot;
