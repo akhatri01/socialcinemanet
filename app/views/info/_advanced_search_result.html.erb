@@ -1,6 +1,28 @@
-Advanced Search Result
-</br>
-<%= @fname %>
+<h1>Advanced Search Result</h1>
+
+<table>
+	<thead>
+		<td>Title</td>
+	</thead>
+		<% @result.each do |movie|%>
+	<tr>
+		<td><%= link_to movie.name, movie_show_path(movie.id) %></td>
+	</tr>
+<%end%>
+</table>
+
+<!-- 
+<h1>Movies by Persons</h1>
+<table>
+	<thead>
+		<td>Title</td>
+	</thead>
+		<% @advanced_movie_person_result.each do |movie|%>
+	<tr>
+		<td><%= link_to movie.name, movie_show_path(movie.id) %></td>
+	</tr>
+<%end%>
+</table>
 
 <h1>Movies</h1>
 <table>
@@ -13,3 +35,32 @@ Advanced Search Result
 	</tr>
 <%end%>
 </table>
+
+<h1>Movies by genre</h1>
+<table>
+	<thead>
+		<td>Title</td>
+	</thead>
+		<% @advanced_movie_genre_result.each do |movie|%>
+	<tr>
+		<td><%= link_to movie.name, movie_show_path(movie.id) %></td>
+	</tr>
+<%end%>
+</table>
+
+<h1>Movies by oscar</h1>
+<table>
+	<thead>
+		<td>Title</td>
+	</thead>
+		<% @advanced_movie_oscar_result.each do |movie|%>
+	<tr>
+		<td><%= link_to movie.name, movie_show_path(movie.id) %></td>
+	</tr>
+<%end%>
+</table>
+
+
+
+
+ -->
