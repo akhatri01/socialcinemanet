@@ -63,15 +63,21 @@ class Movie < ActiveRecord::Base
     elsif sort_by == 'user_rating'
       Movie.find_by_sql [
         "SELECT m.* " +
-        "FROM (SELECT * FROM aggregate_u_ratings_for_movies ORDER BY average DESC, COUNT DESC LIMIT ?,?) a " + 
-        "LEFT JOIN movies m ON m.id = a.mid AND m.name IS NOT null AND m.name <> '' ", 
+        "FROM movies m " + 
+        "WHERE m.name IS NOT null " + 
+        "AND m.name <> '' " + 
+        "ORDER BY user_rating DESC, user_rating_count DESC, m.name " + 
+        "LIMIT ?,?", 
         (idx-1)*20, 20
       ]
     elsif sort_by == 'user_rating_number'
       Movie.find_by_sql [
         "SELECT m.* " +
-        "FROM (SELECT * FROM aggregate_u_ratings_for_movies ORDER BY count DESC, average DESC LIMIT ?,?) a " + 
-        "LEFT JOIN movies m ON m.id = a.mid AND m.name IS NOT null AND m.name <> '' ", 
+        "FROM movies m " + 
+        "WHERE m.name IS NOT null " + 
+        "AND m.name <> '' " + 
+        "ORDER BY user_rating_count DESC, user_rating DESC, m.name " + 
+        "LIMIT ?,?", 
         (idx-1)*20, 20
       ]
     else

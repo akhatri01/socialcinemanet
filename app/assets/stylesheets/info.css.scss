@@ -424,7 +424,10 @@ table {
       border: 1px solid #a6afba;
       padding: 5px;
       
-      &.imdb-rating {
+      &.title {
+        max-width: 400px;
+      }
+      &.imdb-rating, &.user-rating {
         text-align: center;
       }
     }

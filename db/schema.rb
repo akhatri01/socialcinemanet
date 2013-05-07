@@ -11,16 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130507160549) do
+ActiveRecord::Schema.define(:version => 20130507202608) do
 
   create_table "aggregate_u_ratings_for_movies", :id => false, :force => true do |t|
     t.integer "mid"
     t.float   "average"
     t.integer "count",   :limit => 8, :default => 0, :null => false
   end
-
-  add_index "aggregate_u_ratings_for_movies", ["average"], :name => "average_index_aggregate_u_ratings_for_movies"
-  add_index "aggregate_u_ratings_for_movies", ["count"], :name => "count_index_aggregate_u_ratings_for_movies"
 
   create_table "classifieds", :id => false, :force => true do |t|
     t.integer  "mid",        :default => 0, :null => false
@@ -55,11 +52,13 @@ ActiveRecord::Schema.define(:version => 20130507160549) do
     t.datetime "release_date"
     t.float    "imdb_rating"
     t.integer  "length"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
     t.string   "imdb_url"
     t.string   "poster_url"
     t.text     "plot"
+    t.float    "user_rating"
+    t.integer  "user_rating_count"
   end
 
   add_index "movies", ["imdb_rating", "name"], :name => "movie_imdb_index"
