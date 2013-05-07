@@ -21,6 +21,8 @@ SocialCinemaNet::Application.routes.draw do
   match 'movie/:id/rate' => 'movies#rate', :as => 'movie_rate'
   
   match 'genres' => 'genres#index'
+  
+  match 'users' => 'users#index'
 
   root :to => 'info#index'
 

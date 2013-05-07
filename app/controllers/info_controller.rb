@@ -8,7 +8,7 @@ class InfoController < ApplicationController
     if @sort_by == 'imdb_rating'
       movie_count = Movie.where("name <> '' AND name IS NOT null AND imdb_rating IS NOT null").count
     elsif @sort_by == 'user_rating' || @sort_by == 'user_rating_number'
-      movie_count = Movie.find_by_sql(["SELECT distinct mid FROM u_ratings FORCE INDEX (rating_index)"]).size 
+      movie_count = ActiveRecord::Base.connection.execute("SELECT COUNT(*) FROM aggregate_u_ratings_for_movies").first[0] 
     else
       movie_count = Movie.where("name <> '' AND name IS NOT null").count
     end

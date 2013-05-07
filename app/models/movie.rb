@@ -18,7 +18,7 @@ class Movie < ActiveRecord::Base
     sum = 0
     cnt = 0
     self.u_ratings.each do |u_rating|
-      sum += u_rating.rating
+      sum += (u_rating.rating || 0)
       cnt += 1
     end
     if cnt > 0
@@ -63,15 +63,15 @@ class Movie < ActiveRecord::Base
     elsif sort_by == 'user_rating'
       Movie.find_by_sql [
         "SELECT m.* " +
-        "FROM (SELECT mid, AVG(rating) as avg FROM u_ratings FORCE INDEX (rating_index) GROUP BY mid ORDER BY avg DESC LIMIT ?,?) sq " + 
-        "LEFT JOIN movies m ON m.id = sq.mid AND m.name IS NOT null AND m.name <> ''", 
+        "FROM (SELECT * FROM aggregate_u_ratings_for_movies ORDER BY average DESC, COUNT DESC LIMIT ?,?) a " + 
+        "LEFT JOIN movies m ON m.id = a.mid AND m.name IS NOT null AND m.name <> '' ", 
         (idx-1)*20, 20
       ]
     elsif sort_by == 'user_rating_number'
       Movie.find_by_sql [
         "SELECT m.* " +
-        "FROM (SELECT mid, AVG(rating) as avg FROM u_ratings FORCE INDEX (rating_index) GROUP BY mid ORDER BY COUNT(rating) DESC, avg DESC LIMIT ?,?) sq " + 
-        "LEFT JOIN movies m ON m.id = sq.mid AND m.name IS NOT null AND m.name <> ''", 
+        "FROM (SELECT * FROM aggregate_u_ratings_for_movies ORDER BY count DESC, average DESC LIMIT ?,?) a " + 
+        "LEFT JOIN movies m ON m.id = a.mid AND m.name IS NOT null AND m.name <> '' ", 
         (idx-1)*20, 20
       ]
     else

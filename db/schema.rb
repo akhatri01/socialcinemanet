@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130506021925) do
+ActiveRecord::Schema.define(:version => 20130507160549) do
+
+  create_table "aggregate_u_ratings_for_movies", :id => false, :force => true do |t|
+    t.integer "mid"
+    t.float   "average"
+    t.integer "count",   :limit => 8, :default => 0, :null => false
+  end
+
+  add_index "aggregate_u_ratings_for_movies", ["average"], :name => "average_index_aggregate_u_ratings_for_movies"
+  add_index "aggregate_u_ratings_for_movies", ["count"], :name => "count_index_aggregate_u_ratings_for_movies"
 
   create_table "classifieds", :id => false, :force => true do |t|
     t.integer  "mid",        :default => 0, :null => false
@@ -130,6 +139,7 @@ ActiveRecord::Schema.define(:version => 20130506021925) do
   end
 
   add_index "u_ratings", ["mid"], :name => "fk_mid_u_ratings"
+  add_index "u_ratings", ["rating"], :name => "rating_index"
   add_index "u_ratings", ["uid", "mid"], :name => "unique_user_rating", :unique => true
 
   create_table "users", :force => true do |t|

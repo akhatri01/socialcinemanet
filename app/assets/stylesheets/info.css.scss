@@ -270,6 +270,21 @@ body {
         font-size: 80%;
         display: none;
       }
+      &.rated {
+        #rate-this-movie {
+          display: none;
+        }
+        .your-rating {
+          font-size: 80%;
+        }
+        .edit-rating {
+          font-size: 70%;
+          &:hover {
+            background: none;
+            color: #333;
+          }
+        }
+      }
       #rate-this-movie {
         span {
           font-size: 100%;

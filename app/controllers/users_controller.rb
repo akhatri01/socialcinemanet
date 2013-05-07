@@ -1,6 +1,17 @@
 class UsersController < ApplicationController
-  layout 'users'
+  layout :resolve_layout
   
+  private
+  def resolve_layout
+    case action_name
+    when "register", "create_user", "login", "new_session"
+      "users"
+    else
+      "application"
+    end
+  end
+  
+  public
   def register
     if !logged_in?
       @user = User.new
@@ -46,7 +57,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @users = User.limit(10).all
 
     respond_to do |format|
       format.html # index.html.erb

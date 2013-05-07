@@ -65,6 +65,12 @@ $(document).ready(function() {
 		      }
 		  });
   });
+  
+  $('#user-rate.rated').find('.edit-rating').click(function() {
+    $(this).hide();
+    $('#rate-this-movie').show()
+    return false;
+  })
 });
 
 // function searchSubmit() {
