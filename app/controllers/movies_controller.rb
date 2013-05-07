@@ -31,9 +31,11 @@ class MoviesController < ApplicationController
       urating.mid = params[:id].to_i
       urating.uid = @current_user.id
       urating.save
+      ActiveRecord::Base.connection.execute "UPDATE movies m LEFT JOIN (SELECT mid, AVG(rating) as average, COUNT(rating) as cnt FROM u_ratings u WHERE u.mid = " + urating.mid.to_s + " GROUP BY mid) res ON res.mid = m.id SET user_rating=res.average, user_rating_count=res.cnt WHERE m.id=" + urating.mid.to_s
     else
       urating.rating = params[:rating].to_f
       urating.save
+      ActiveRecord::Base.connection.execute "UPDATE movies m LEFT JOIN (SELECT mid, AVG(rating) as average, COUNT(rating) as cnt FROM u_ratings u WHERE u.mid = " + urating.mid.to_s + " GROUP BY mid) res ON res.mid = m.id SET user_rating=res.average, user_rating_count=res.cnt WHERE m.id=" + urating.mid.to_s
     end
     render :partial => 'movies/movie', :locals => {:movie => @movie}
   end

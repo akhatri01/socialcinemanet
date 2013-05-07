@@ -14,7 +14,7 @@
       </div>
       <% if @current_user.rated_movies.include? movie %>
         <div class="your-rating">Your Rating: <strong><%= URating.where("mid = ? and uid = ?", movie.id, @current_user.id).first.rating %></strong></div>
-        <a href="#" class="edit-rating">Edit your rating</a>
+        <a href="#" class="edit-rating" onClick="edit_rating(); return false;">Edit your rating</a>
       <% end %>
       <form id="rate-this-movie" class="clearfix" action="#" onSubmit="rate_this_movie_submit(); return false;">
         <input type="text" class="rating" maxlength="3"><span>&nbsp;&nbsp;/ 10</span>

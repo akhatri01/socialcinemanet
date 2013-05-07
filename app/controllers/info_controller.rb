@@ -7,8 +7,8 @@ class InfoController < ApplicationController
     
     if @sort_by == 'imdb_rating'
       movie_count = Movie.where("name <> '' AND name IS NOT null AND imdb_rating IS NOT null").count
-    elsif @sort_by == 'user_rating' || @sort_by == 'user_rating_number'
-      movie_count = ActiveRecord::Base.connection.execute("SELECT COUNT(*) FROM aggregate_u_ratings_for_movies").first[0] 
+    # elsif @sort_by == 'user_rating' || @sort_by == 'user_rating_number'
+    #   movie_count = ActiveRecord::Base.connection.execute("SELECT COUNT(*) FROM aggregate_u_ratings_for_movies").first[0] 
     else
       movie_count = Movie.where("name <> '' AND name IS NOT null").count
     end
@@ -126,7 +126,7 @@ class InfoController < ApplicationController
     # while (@movie = Movie.where("name is not null and name <> ''").offset(rand(Movie.count)).first) == nil
     #   next
     # end
-    while (@movie = Movie.where("name is not null and name <> '' and imdb_url is not null").offset(rand(Movie.where("name is not null and name <> '' and imdb_url is not null").count)).first) == nil
+    while (@movie = Movie.offset(rand(Movie.where("name is not null and name <> '' and imdb_url is not null").count)).first) == nil
       next
     end
     # /([a-zA-Z\d]*(\s[-a-zA-Z\d]*)*)\s\((.+)\)/ =~ @movie.name

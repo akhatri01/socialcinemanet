@@ -65,12 +65,6 @@ $(document).ready(function() {
 		      }
 		  });
   });
-  
-  $('#user-rate.rated').find('.edit-rating').click(function() {
-    $(this).hide();
-    $('#rate-this-movie').show()
-    return false;
-  })
 });
 
 // function searchSubmit() {
@@ -128,6 +122,12 @@ function rate_this_movie_submit() {
   } else {
     $('#user-rate').find('.error').show();
   }
+  return false;
+}
+
+function edit_rating() {
+  $('#user-rate.rated').find('.edit-rating').hide();
+  $('#rate-this-movie').show();
   return false;
 }
 
