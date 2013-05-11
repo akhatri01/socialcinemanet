@@ -55,55 +55,71 @@ class InfoController < ApplicationController
   end
   
   def advanced_search_result
-    movie_person_flag = false
-    movie_flag = false
-    genre_flag = false
-    oscar_flag = false
+    @movie_person_flag = false
+    @movie_flag = false
+    @genre_flag = false
+    @oscar_flag = false
+	#@person_list = []
+	
+	@search_criteria = ''
     
-    params["movie_persons"].each  do |person|
+    params["movie_persons"].each_with_index  do |person, index|
       if(person["fname"]!="" || person["mname"] !="" || person["lname"]!="") then
-        movie_person_flag = true
+        @movie_person_flag = true
+		if (person['lname']!='') then @search_criteria += " lname: "+person['lname'] end
+		if (person['mname']!='') then @search_criteria += " mname: "+person['mname'] end
+		if (person['fname']!='') then @search_criteria += " fname: "+person['fname'] end
+		if (person['director']==true) then @search_criteria += " as Director " end
+		if (person['actor']==true) then @search_criteria += " as Actor " end
       end
     end
     
-    movie = params["movie"]
+	movie = params["movie"]
     if(movie['movie_title']!='' || movie['movie_year']!='' || movie['imdb_rating']!='' || movie['user_rating']!='') then
-      movie_flag = true
+      @movie_flag = true
+	  if (movie['movie_title']!='') then @search_criteria += " movie_title: " + movie['movie_title'] end
+	  if (movie['movie_year']!='') then @search_criteria += " movie_year: " + movie['movie_year'] end
+	  if (movie['imdb_rating']!='') then @search_criteria += " imdb_rating: " + movie['imdb_rating'] end
     end
     
     if(params["genre"]['genre_category']!='') then
-      genre_flag = true
+      @genre_flag = true
+	  @search_criteria += " genre: " + params["genre"]['genre_category']
     end
     
     oscar = params["oscar"]
     if(oscar['oscar_category']!='' || oscar['start_year']!='' || oscar['end_year']!='') then
-      oscar_flag = true
+      @oscar_flag = true
+	  if(oscar['oscar_category']!='') then @search_criteria += " oscar: " + oscar['oscars_category'] end
+	  if(oscar['start_year']!='') then @search_criteria += " oscar_start_year: " + oscar['start_year'] end
+	  if(oscar['end_year']!='') then @search_criteria += " oscar_end_year: " + oscar['end_year'] end
+	  
     end
     
-    puts movie_person_flag
+    # puts movie_person_flag
     # puts movie_flag
     # puts genre_flag
     # puts oscar_flag
     
-    if(movie_person_flag) then
+    if(@movie_person_flag) then
       @advanced_movie_person_result = Advanced_search.search_by_name(params["movie_persons"])
     else
       @advanced_movie_person_result = []
     end
     
-    if(movie_flag) then
+    if(@movie_flag) then
       @advanced_movie_result = Advanced_search.search_by_movie(params["movie"])
     else
       @advanced_movie_result = []
     end
     
-    if(genre_flag) then
+    if(@genre_flag) then
       @advanced_movie_genre_result = Advanced_search.search_by_genre(params["genre"])
     else
       @advanced_movie_genre_result = []
     end
     
-     if(oscar_flag) then
+     if(@oscar_flag) then
         @advanced_movie_oscar_result = Advanced_search.search_by_oscar(params["oscar"])
       else
         @advanced_movie_oscar_result = []
@@ -113,10 +129,10 @@ class InfoController < ApplicationController
     
     @result = @advanced_movie_person_result | @advanced_movie_result | @advanced_movie_genre_result | @advanced_movie_oscar_result
     
-    if(movie_person_flag) then @result = @result & @advanced_movie_person_result end
-    if(movie_flag) then @result = @result & @advanced_movie_result end
-    if(genre_flag) then @result = @result & @advanced_movie_genre_result end
-    if(oscar_flag) then @result = @result & @advanced_movie_oscar_result end
+    if(@movie_person_flag) then @result = @result & @advanced_movie_person_result end
+    if(@movie_flag) then @result = @result & @advanced_movie_result end
+    if(@genre_flag) then @result = @result & @advanced_movie_genre_result end
+    if(@oscar_flag) then @result = @result & @advanced_movie_oscar_result end
       
       
     render :partial => "advanced_search_result"

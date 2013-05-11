@@ -13,12 +13,6 @@
 
 ActiveRecord::Schema.define(:version => 20130507202608) do
 
-  create_table "aggregate_u_ratings_for_movies", :id => false, :force => true do |t|
-    t.integer "mid"
-    t.float   "average"
-    t.integer "count",   :limit => 8, :default => 0, :null => false
-  end
-
   create_table "classifieds", :id => false, :force => true do |t|
     t.integer  "mid",        :default => 0, :null => false
     t.integer  "gid",        :default => 0, :null => false
@@ -65,6 +59,8 @@ ActiveRecord::Schema.define(:version => 20130507202608) do
   add_index "movies", ["name", "release_date"], :name => "name_date_constraint", :unique => true
   add_index "movies", ["name"], :name => "movie_name_index"
   add_index "movies", ["release_date", "name"], :name => "movie_year_index"
+  add_index "movies", ["user_rating"], :name => "u_rating_avg_index"
+  add_index "movies", ["user_rating_count"], :name => "u_rating_cnt_index"
 
   create_table "oscars", :force => true do |t|
     t.string   "category"
@@ -138,7 +134,6 @@ ActiveRecord::Schema.define(:version => 20130507202608) do
   end
 
   add_index "u_ratings", ["mid"], :name => "fk_mid_u_ratings"
-  add_index "u_ratings", ["rating"], :name => "rating_index"
   add_index "u_ratings", ["uid", "mid"], :name => "unique_user_rating", :unique => true
 
   create_table "users", :force => true do |t|

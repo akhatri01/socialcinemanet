@@ -1,66 +1,75 @@
-<h1>Advanced Search Result</h1>
+<h3>Results for <%= @search_criteria %></h3>
 
 <table>
 	<thead>
 		<td>Title</td>
+		<!-- <% if @movie_person_flag==true%><td>fname</td><%end%> -->
 	</thead>
 		<% @result.each do |movie|%>
+		
 	<tr>
 		<td><%= link_to movie.name, movie_show_path(movie.id) %></td>
 	</tr>
-<%end%>
+	<%end%>
 </table>
 
 <!-- 
-<h1>Movies by Persons</h1>
-<table>
-	<thead>
-		<td>Title</td>
-	</thead>
-		<% @advanced_movie_person_result.each do |movie|%>
-	<tr>
-		<td><%= link_to movie.name, movie_show_path(movie.id) %></td>
-	</tr>
+<% if @movie_person_flag==true %>
+	<h2>Movies by Persons</h2>
+	<table>
+		<thead>
+			<td>Title</td>
+		</thead>
+			<% @advanced_movie_person_result.each do |movie|%>
+		<tr>
+			<td><%= link_to movie.name, movie_show_path(movie.id) %></td>
+		</tr>
+	<%end%>
+	</table>
 <%end%>
-</table>
 
-<h1>Movies</h1>
-<table>
-	<thead>
-		<td>Title</td>
-	</thead>
-		<% @advanced_movie_result.each do |movie|%>
-	<tr>
-		<td><%= link_to movie.name, movie_show_path(movie.id) %></td>
-	</tr>
+<% if @movie_flag==true %>
+	<h2>Movies</h2>
+	<table>
+		<thead>
+			<td>Title</td>
+		</thead>
+			<% @advanced_movie_result.each do |movie|%>
+		<tr>
+			<td><%= link_to movie.name, movie_show_path(movie.id) %></td>
+		</tr>
+	<%end%>
+	</table>
 <%end%>
-</table>
 
-<h1>Movies by genre</h1>
-<table>
-	<thead>
-		<td>Title</td>
-	</thead>
-		<% @advanced_movie_genre_result.each do |movie|%>
-	<tr>
-		<td><%= link_to movie.name, movie_show_path(movie.id) %></td>
-	</tr>
+
+<% if @genre_flag==true %>	
+	<h2>Movies by genre</h2>
+	<table>
+		<thead>
+			<td>Title</td>
+		</thead>
+			<% @advanced_movie_genre_result.each do |movie|%>
+		<tr>
+			<td><%= link_to movie.name, movie_show_path(movie.id) %></td>
+		</tr>
+	<%end%>
+	</table>
 <%end%>
-</table>
-
-<h1>Movies by oscar</h1>
-<table>
-	<thead>
-		<td>Title</td>
-	</thead>
-		<% @advanced_movie_oscar_result.each do |movie|%>
-	<tr>
-		<td><%= link_to movie.name, movie_show_path(movie.id) %></td>
-	</tr>
+	
+<% if @oscar_flag==true %>	
+	<h2>Movies by oscar</h2>
+	<table>
+		<thead>
+			<td>Title</td>
+		</thead>
+			<% @advanced_movie_oscar_result.each do |movie|%>
+		<tr>
+			<td><%= link_to movie.name, movie_show_path(movie.id) %></td>
+		</tr>
+	<%end%>
+	</table>
 <%end%>
-</table>
 
 
-
-
- -->
+-->
