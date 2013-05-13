@@ -8,7 +8,7 @@
 
 <% @genres_movie_counts.each do |key, val| %>
   <tr>
-    <td><%= @genres[key].category %></td>
+    <td><%= link_to @genres[key].category, genre_show_path(@genres[key].id) %></td>
     <td><%= number_with_delimiter val %></td>
   </tr>
 <% end %>
