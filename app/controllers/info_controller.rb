@@ -90,7 +90,7 @@ class InfoController < ApplicationController
     oscar = params["oscar"]
     if(oscar['oscar_category']!='' || oscar['start_year']!='' || oscar['end_year']!='') then
       @oscar_flag = true
-	  if(oscar['oscar_category']!='') then @search_criteria += " oscar: " + oscar['oscars_category'] end
+	  if(oscar['oscar_category']!='') then @search_criteria += " oscar: " + oscar['oscar_category'] end
 	  if(oscar['start_year']!='') then @search_criteria += " oscar_start_year: " + oscar['start_year'] end
 	  if(oscar['end_year']!='') then @search_criteria += " oscar_end_year: " + oscar['end_year'] end
 	  

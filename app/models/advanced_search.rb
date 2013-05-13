@@ -115,25 +115,29 @@ class Advanced_search < ActiveRecord::Base
     if(predicate != '') then
         Movie.find_by_sql [
            "select dt.id, dt.name from
-           ((select m.id, m.name, m.release_date, o.category from movies m, oscars o, 
+           ((select m.id, m.name from movies m, oscars o, 
            p_nominated pn where m.id = pn.mid and pn.oid=o.id and o.category like ?)
            union
-           (select m.id, m.name, m.release_date, o.category from movies m, oscars o, m_nominated mn 
+           (select m.id, m.name from movies m, oscars o, m_nominated mn 
            where m.id = mn.mid and mn.oid=o.id and o.category like ?)) dt " + predicate,
             '%'<<oscar['oscar_category']<<'%', '%'<<oscar['oscar_category']<<'%'
         ]
       else
          Movie.find_by_sql [
              "select dt.id, dt.name from
-             ((select m.id, m.name, m.release_date, o.category from movies m, oscars o, 
+             ((select m.id, m.name from movies m, oscars o, 
              p_nominated pn where m.id = pn.mid and pn.oid=o.id and o.category like ?)
              union
-             (select m.id, m.name, m.release_date, o.category from movies m, oscars o, m_nominated mn 
+             (select m.id, m.name from movies m, oscars o, m_nominated mn 
              where m.id = mn.mid and mn.oid=o.id and o.category like ?)) dt 
               ",
               '%'<<oscar['oscar_category']<<'%', '%'<<oscar['oscar_category']<<'%'
             ]
       end
+   end
+   
+   def self.find_genre_oscar(mid)
+		s
    end
   
 end
