@@ -13,12 +13,6 @@
 
 ActiveRecord::Schema.define(:version => 20130513180307) do
 
-  create_table "aggregate_u_ratings_for_movies", :id => false, :force => true do |t|
-    t.integer "mid"
-    t.float   "average"
-    t.integer "count",   :limit => 8, :default => 0, :null => false
-  end
-
   create_table "classifieds", :id => false, :force => true do |t|
     t.integer  "mid",        :default => 0, :null => false
     t.integer  "gid",        :default => 0, :null => false
@@ -143,7 +137,6 @@ ActiveRecord::Schema.define(:version => 20130513180307) do
   add_index "u_ratings", ["rating"], :name => "rating_index"
   add_index "u_ratings", ["uid", "mid"], :name => "unique_user_rating", :unique => true
   add_index "u_ratings", ["updated_at"], :name => "updated_at_index"
-  add_index "u_ratings", ["updated_at"], :name => "updated_at_inx"
 
   create_table "users", :force => true do |t|
     t.string   "fname"
