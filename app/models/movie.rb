@@ -7,6 +7,12 @@ class Movie < ActiveRecord::Base
   has_many :roles, :foreign_key => :mid
   has_many :persons, :through => :roles, :source => :person
   
+  has_many :m_nominated, :foreign_key => :mid
+  has_many :movie_oscars, :through => :m_nominated, :source => :oscar
+  
+  has_many :p_nominated, :foreign_key => :mid
+  has_many :person_oscars, :through => :p_nominated, :source => :oscar
+  
   has_many :classifieds, :foreign_key => :mid
   has_many :genres, :through => :classifieds, :source => :genre
   

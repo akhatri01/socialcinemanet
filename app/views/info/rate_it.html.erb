@@ -1,7 +1,9 @@
+
+
 <div id="rate_it" class="clearfix">
   <h1>Rate It!</h2>
   <div class="movie clearfix" id="movie_<%= @movie.id %>">
-  <%= render :partial => 'movies/movie', :locals => {:movie => @movie } %>
+  <%=render :partial => 'movies/movie', :locals => {:movie => @movie, :genre => @genre, :m_oscar => @m_oscar, :p_oscar => @p_oscar, :movie_crew => @movie_crew } %>
   </div>
   <a href="/rate" class="next-movie">
     <%#= next movie button %>

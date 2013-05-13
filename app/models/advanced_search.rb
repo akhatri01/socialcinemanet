@@ -4,9 +4,45 @@ class Advanced_search < ActiveRecord::Base
     person_size = name_list.size
     predicate = "("
     name_list.each_with_index do |name, index|
-      if(name['fname']!="") then predicate += "(p.fname =\'" + name['fname'] + "\'" end
-      if(name['mname']!="") then predicate += "and p.mname =\'" + name['mname'] + "\'" end
-      if(name['lname']!="") then predicate += "and p.lname =\'" + name['lname'] + "\'" end
+		concat = false
+      if(name['fname']!="")
+			predicate += "(p.fname =\'" + name['fname'] + "\'"
+			puts "Fname is true"
+			concat = true
+		end
+		
+      if(name['mname']!="" and concat==true)
+			predicate += "and p.mname =\'" + name['mname'] + "\'" 
+			concat = true 
+		
+		elsif(name['mname']!="")
+			predicate += "(p.mname =\'" + name['mname'] + "\'"
+			concat = true
+		end
+	
+		if(name['lname']!="" and concat==true)
+			predicate += "and p.lname =\'" + name['lname'] + "\'" 	
+			concat = true
+		elsif(name['lname']!="")
+			predicate += "(p.lname =\'" + name['lname'] + "\'"
+			concat = true
+		end
+		
+		if(name['director']==true and concat==true)
+			predicate += "and r.role_name = \'director\' " 	
+			concat = true
+		elsif(name['director']==true)
+			predicate += " r.role_name = \'director\' " 	
+			concat = true
+		end
+		
+		if(name['actor']==true and concat==true)
+			predicate += "and r.role_name = \'actor\'" 	
+			concat = true
+		elsif(name['actor']==true)
+			predicate += " r.role_name = \'actor\'" 	
+			concat = true
+		end
         
       if(index < name_list.length-1) then predicate += ") or" end
         
@@ -79,25 +115,29 @@ class Advanced_search < ActiveRecord::Base
     if(predicate != '') then
         Movie.find_by_sql [
            "select dt.id, dt.name from
-           ((select m.id, m.name, m.release_date, o.category from movies m, oscars o, 
+           ((select m.id, m.name from movies m, oscars o, 
            p_nominated pn where m.id = pn.mid and pn.oid=o.id and o.category like ?)
            union
-           (select m.id, m.name, m.release_date, o.category from movies m, oscars o, m_nominated mn 
+           (select m.id, m.name from movies m, oscars o, m_nominated mn 
            where m.id = mn.mid and mn.oid=o.id and o.category like ?)) dt " + predicate,
             '%'<<oscar['oscar_category']<<'%', '%'<<oscar['oscar_category']<<'%'
         ]
       else
          Movie.find_by_sql [
              "select dt.id, dt.name from
-             ((select m.id, m.name, m.release_date, o.category from movies m, oscars o, 
+             ((select m.id, m.name from movies m, oscars o, 
              p_nominated pn where m.id = pn.mid and pn.oid=o.id and o.category like ?)
              union
-             (select m.id, m.name, m.release_date, o.category from movies m, oscars o, m_nominated mn 
+             (select m.id, m.name from movies m, oscars o, m_nominated mn 
              where m.id = mn.mid and mn.oid=o.id and o.category like ?)) dt 
               ",
               '%'<<oscar['oscar_category']<<'%', '%'<<oscar['oscar_category']<<'%'
             ]
       end
+   end
+   
+   def self.find_genre_oscar(mid)
+		s
    end
   
 end

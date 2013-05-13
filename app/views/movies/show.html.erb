@@ -1,5 +1,5 @@
 <div id="rate_it" class="clearfix">
   <div class="movie clearfix" id="movie_<%= @movie.id %>">
-  <%= render :partial => 'movies/movie', :locals => {:movie => @movie } %>
+  <%= render :partial => 'movies/movie', :locals => {:movie => @movie, :genre => @genre, :m_oscar => @m_oscar, :p_oscar => @p_oscar, :movie_crew => @movie_crew } %>
   </div>
 </div>

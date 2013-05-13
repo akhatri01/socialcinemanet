@@ -1,5 +1,8 @@
 SocialCinemaNet::Application.routes.draw do
 
+  resources :create_users_archives
+
+
   resources :u_ratings
 
 
@@ -21,6 +24,7 @@ SocialCinemaNet::Application.routes.draw do
   match 'movie/:id/rate' => 'movies#rate', :as => 'movie_rate'
   
   match 'genres' => 'genres#index'
+  match 'genres/:id' => 'genres#show', :as => 'genre_show'
   
   match 'users' => 'users#index'
 

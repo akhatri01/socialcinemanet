@@ -101,7 +101,7 @@ function rate_it_edit_imdb_url(curr_url) {
         $('.movie').html(resp);
       }
     });
-    return false;
+    return false; 
   });
 }
 

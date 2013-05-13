@@ -81,6 +81,51 @@
         <%= movie.plot || '-' %>
       </div>
     </div>
+	
+	<div class="row clearfix">
+      <div class="left">
+        Movie Crew
+      </div>
+      <div class="right">
+        <%= if movie_crew.empty? then '-' end %>
+        <% movie_crew.each do |mc| %>
+			<%= mc['fname']%>
+			<%= mc['lname'] %>
+			<br>
+		<% end %>
+      </div>
+    </div>
+	
+	<div class="row clearfix">
+      <div class="left">
+        Oscar Nominations
+      </div>
+      <div class="right">
+		<%= if m_oscar.empty? and p_oscar.empty? then '-' end %>
+        <% m_oscar.each do |m_o| %>
+			<%= m_o['category'] %>
+			<br>
+		<% end %>
+		<% p_oscar.each do |p_o| %>
+			<%= p_o['category'] %>
+			<br>
+		<% end %>
+      </div>
+    </div>
+	
+	<div class="row clearfix">
+      <div class="left">
+        Genre
+      </div>
+      <div class="right">
+	  <%= if genre.empty? then '-' end %>
+        <% genre.each do |g| %>
+			<%= g['category'] %>
+		<% end %>
+			
+      </div>
+    </div>
+	
     <!-- <% if @imdb_url %>
       <%= link_to 'IMDB', movie_url %>
     <% end %> -->

@@ -5,4 +5,7 @@ class Person < ActiveRecord::Base
   
   has_many :roles, :foreign_key => :pid
   has_many :movies, :through => :roles, :source => :movie
+  
+  has_many :p_nominated, :foreign_key => :pid
+  has_many :oscars,	:through => :p_nominated, :source => :oscar
 end
