@@ -3,5 +3,7 @@ class MNominated < ActiveRecord::Base
   
   set_table_name "m_nominated"
   
+  belongs_to :movie, :foreign_key => :mid
+  belongs_to :oscar, :foreign_key => :oid
 
 end
