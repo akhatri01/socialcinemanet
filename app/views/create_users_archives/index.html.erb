@@ -1,0 +1,21 @@
+<h1>Listing create_users_archives</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @create_users_archives.each do |create_users_archive| %>
+  <tr>
+    <td><%= link_to 'Show', create_users_archive %></td>
+    <td><%= link_to 'Edit', edit_create_users_archive_path(create_users_archive) %></td>
+    <td><%= link_to 'Destroy', create_users_archive, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Create users archive', new_create_users_archive_path %>

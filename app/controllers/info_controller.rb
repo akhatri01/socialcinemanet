@@ -145,6 +145,11 @@ class InfoController < ApplicationController
     while (@movie = Movie.offset(rand(Movie.where("name is not null and name <> '' and imdb_url is not null").count)).first) == nil
       next
     end
+	
+	@m_oscar = @movie.movie_oscars
+	@p_oscar = @movie.person_oscars
+	@genre = @movie.genre
+	@movie_crew = @movie.persons
     # /([a-zA-Z\d]*(\s[-a-zA-Z\d]*)*)\s\((.+)\)/ =~ @movie.name
     # movie_name = $1 || @movie.name
     # # @movie = Movie.find 279154
@@ -169,6 +174,10 @@ class InfoController < ApplicationController
   def ajax_imdb_update
     imdb_url = params[:imdb_url]
     movie = Movie.find params[:id]
+	m_oscar = Movie.find(params[:id]).movie_oscars
+	p_oscar = Movie.find(params[:id]).person_oscars
+	genre = Movie.find(params[:id]).genre
+	movie_crew = Movie.find(params[:id]).persons
     
     /tt(\d+)/ =~ imdb_url
     if !$1
@@ -187,7 +196,7 @@ class InfoController < ApplicationController
       end
     end
     # return render :text => imdb_url
-    render :partial => 'movies/movie', :locals => {:movie => movie}
+    render :partial => 'movies/movie', :locals => {:movie => movie, :m_oscar => m_oscar, :p_oscar => p_oscar, :genre => genre, :movie_crew => movie_crew}
   end
 
 end

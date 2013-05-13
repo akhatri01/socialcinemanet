@@ -3,4 +3,7 @@ class Oscar < ActiveRecord::Base
   
   has_many :m_nominated, :foreign_key => :oid
   has_many :oscar_movies, :through => :m_nominated, :source => :movie 
+  
+  has_many :p_nominated, :foreign_key => :oid
+  has_many :oscar_persons, :through => :p_nominated, :source => :movie 
 end

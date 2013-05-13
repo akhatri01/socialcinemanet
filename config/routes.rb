@@ -1,5 +1,8 @@
 SocialCinemaNet::Application.routes.draw do
 
+  resources :create_users_archives
+
+
   resources :u_ratings
 
 
