@@ -1,0 +1,21 @@
+<h1>Listing top_users</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @top_users.each do |top_user| %>
+  <tr>
+    <td><%= link_to 'Show', top_user %></td>
+    <td><%= link_to 'Edit', edit_top_user_path(top_user) %></td>
+    <td><%= link_to 'Destroy', top_user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Top user', new_top_user_path %>

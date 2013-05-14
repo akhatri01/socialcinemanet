@@ -1,74 +1,47 @@
-<div id="sort-movies" class="sort">
-  Sort by:
-  <select>
-    <option value="title" <%= if @sort_by == 'name' then "selected=\"selected\"" end %> >Title</option>
-    <option value="year" <%= if @sort_by == 'year' then "selected=selected" end %> >Year</option>
-    <option value="imdb_rating" <%= if @sort_by == 'imdb_rating' then "selected=selected" end %> >IMDB Rating</option>
-    <option value="user_rating" <%= if @sort_by == 'user_rating' then "selected=selected" end %> >User Rating (highest rated)</option>
-    <option value="user_rating_number" <%= if @sort_by == 'user_rating_number' then "selected=selected" end %> >User Rating (most rated)</option>
-  </select>
+<pre>
+	
+		Social Cinema Net is a movie database that allows users to find information about all the movies, actors, oscar nomination, and genres. The database allows users to create an account which help to rate the movies, and update the movie. The database provides users to search movie by title, actor, genre, or oscar nomination. Along with regular search, the social movie database also provides the extensive search that help to filters all the search criteria. The page is user friendly and effective. The users are allowed to update the database based on the imdb movie url.
+</pre>
+
+<% if @logged_in %>
+	<h3> Top 3 Users </h3>
+
+	<br>
+<% end %>
+
+<h3>
+	Top 20 user-rated movies
+</h3>
+
+<div> Sort By </div>
+<div>
+<a href="/?sort_by=user_rating">Top 20 (Avg User Rating)</a>
+<a href="/?sort_by=user_rating_count">Top 20 (User Rating Count)</a>
 </div>
 
-<p>
-  Page <%= @idx %>
-  of
-  <%= number_with_delimiter @max_pages+1 %>
-</p>
 <table>
   <thead>
     <tr>
-      <td>ID</td>
-      <td>Title</td>
+      <td>Name</td>
       <td>Year</td>
-      <td>IMDB Rating</td>
       <td>User Rating</td>
-      <td>Genre</td>
+      <td>User Rating Count</td>
     </tr>
   </thead>
 <% @movies.each do |movie| %>
   <tr>
     <td>
-      <%= movie.id %>
-    </td>
-    <td class="title">
-      <%= link_to movie.name.titleize, movie_show_path(movie.id) %>
+      <%= link_to movie.name, movie_show_path(movie.id) %>
     </td>
     <td>
       <%= movie.release_date.year %>
     </td>
     <td class="imdb-rating">
-      <%= movie.imdb_rating || "-" %>
-    </td>
-    <td class="user-rating">
-      <%= render :partial => 'movies/user_rating', :locals => {:movie => movie } %>
+      <%= movie.user_rating.round(1) rescue "N/A" %>
     </td>
     <td>
-      <%= movie.genre[0].category rescue "-" %>
+      <%= movie.user_rating_count %>
     </td>
 </tr>
 <% end %>
 </table>
-<div class="pagination">
-  <% vars = { :sort_by => @sort_by } %>
-  <% if @idx != 1 %>
-    <%= link_to "First", {:controller => "movies", :action => "index", :idx => 1 }.merge(vars) %>
-  <% end %>
-  <% if @idx_prev %>
-    <%= link_to "Prev", {:controller => "movies", :action => "index", :idx => @idx_prev }.merge(vars) %>
-  <% end %>
-  <% if @idx > 3 %>
-    ...
-  <% end %>
-  <% @page_nums.each do |page| %>
-    <%= link_to page.to_s, {:controller => "movies", :action => "index", :idx => page }.merge(vars) %>
-  <% end %>
-  <% if @idx != @max_pages %>
-    ...
-  <% end %>
-  <% if @idx_next %>
-    <%= link_to "Next", {:controller => "movies", :action => "index", :idx => @idx_next }.merge(vars) %>
-  <% end %>
-  <% if @idx < @max_pages - 2 %>
-    <%= link_to "Last", {:controller => "movies", :action => "index", :idx => @max_pages }.merge(vars) %>
-  <% end %>
-</div>
