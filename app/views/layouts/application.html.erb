@@ -13,7 +13,7 @@
       <div id="user-links">
         <ul>
           <% if @logged_in %>
-          <li><%= @current_user.lname %></li>
+          <li style='line-height:35px; font-size: 85%; margin: 0 10px 0 0'>Welcome, <strong><%= @current_user.fname + " " + @current_user.mname + " " + @current_user.lname %></strong></li>
           <li><%= link_to 'My Account', '/user/myaccount' %></li>
           <li><%= link_to 'Logout', logout_path, :method => :delete %></li>
           <% else %>
