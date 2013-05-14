@@ -1,6 +1,5 @@
 <pre>
-	
-		Social Cinema Net is a movie database that allows users to find information about all the movies, actors, oscar nomination, and genres. The database allows users to create an account which help to rate the movies, and update the movie. The database provides users to search movie by title, actor, genre, or oscar nomination. Along with regular search, the social movie database also provides the extensive search that help to filters all the search criteria. The page is user friendly and effective. The users are allowed to update the database based on the imdb movie url.
+<strong>Social Cinema Net</strong> is a movie database that allows users to find information about all the movies, actors, oscar nomination, and genres. The database allows users to create an account which help to rate the movies, and update the movie. The database provides users to search movie by title, actor, genre, or oscar nomination. Along with regular search, the social movie database also provides the extensive search that help to filters all the search criteria. The page is user friendly and effective. The users are allowed to update the database based on the imdb movie url.
 </pre>
 
 <% if @logged_in %>
@@ -12,12 +11,12 @@
 		      <td>Number of Movies rated</td>
 		    </tr>
 		  </thead>
-		<tr>
 			<% @top_users.each do |user|%>
-				<td><%= User.find(user[0]).fname%></td>
-				<td><%= user[1]%>
-			<% end %>
+		<tr>
+      <td><%= user[0] %></td>
+				<td><%= user[1] %></td>
 		</tr>
+			<% end %>
 	</table>
 	<br>
 <% end %>
@@ -29,6 +28,7 @@
 <div> Sort By </div>
 <div>
 <a href="/?sort_by=user_rating">Top 20 (Avg User Rating)</a>
+&nbsp;&middot;&nbsp;
 <a href="/?sort_by=user_rating_count">Top 20 (User Rating Count)</a>
 </div>
 
