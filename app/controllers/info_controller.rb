@@ -3,9 +3,14 @@ class InfoController < ApplicationController
   def index
     
     sort_by = params[:sort_by] || 'user_rating'
+    if sort_by == 'user_rating'
+      sort_by = "user_rating desc, user_rating_count desc, name" 
+    else
+      sort_by = "user_rating_count desc, user_rating desc, name" 
+    end
     
     @movies = Movie.find_by_sql ["select id, name, release_date, user_rating, user_rating_count
-                                  from movies order by " + sort_by + " desc limit 20"
+                                  from movies order by " + sort_by + " limit 20"
                                 ]
     
     @top_users = ActiveRecord::Base.connection.execute "select * from ( select uid, count(1) as count_rate 
