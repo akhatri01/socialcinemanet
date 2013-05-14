@@ -10,7 +10,8 @@ class InfoController < ApplicationController
     
     @top_users = User.find_by_sql ["select u.* from ( select uid, count(1) as count_rate 
                           from u_ratings where updated_at BETWEEN 
-                          date_format(NOW() - INTERVAL 1 MONTH, '\%Y-\%m-01') AND last_day(NOW() - INTERVAL 1 MONTH)  
+                          DATE_SUB(LAST_DAY(DATE_SUB(NOW(), INTERVAL 1 MONTH)),INTERVAL DAY(LAST_DAY(DATE_SUB(NOW(), INTERVAL 1 MONTH)))-1 DAY)
+                           AND LAST_DAY(DATE_SUB(NOW(), INTERVAL 1 MONTH)) 
                           group by uid) dt JOIN users u on u.id=dt.uid order by dt.count_rate desc limit 3
     "]
   end

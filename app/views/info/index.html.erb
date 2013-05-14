@@ -14,8 +14,8 @@
 		  </thead>
 		<tr>
 			<% @top_users.each do |user|%>
-				<td><%= user.fname + " " + user.mname + " " + user.lname%></td>
-				<td><%= user.u_ratings.where("updated_at between date_format(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') AND last_day(NOW() - INTERVAL 1 MONTH)")%>
+				<td><%= User.find(user[0]).fname%></td>
+				<td><%= user[1]%>
 			<% end %>
 		</tr>
 	</table>
