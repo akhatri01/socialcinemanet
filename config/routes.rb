@@ -46,6 +46,8 @@ SocialCinemaNet::Application.routes.draw do
   match 'oscar/:id/m_nom/:year' => 'oscars#m_nom', :as => 'm_nom'
   match 'oscar/:id/p_nom/:year' => 'oscars#p_nom', :as => 'p_nom'
   
+  match 'movie/imdb/global_update' => 'info#ajax_imdb_global_update', :as => 'imdb_global_update'
+  
   root :to => 'info#index'
 
 

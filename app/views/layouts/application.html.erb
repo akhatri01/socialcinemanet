@@ -35,8 +35,10 @@
           <li><%= link_to 'Oscars', '/oscars' %></li>
           <li><%= link_to 'Actors', '/actors' %></li>
           <li><%= link_to 'Directors', '/directors' %></li>
-          <li><%= link_to 'Rate It!', '/rate' %></li>
-          <li><%= link_to 'Users', '/users' %></li>
+          <% if @logged_in %>
+            <li><%= link_to 'Rate It!', '/rate' %></li>
+            <li><%= link_to 'Users', '/users' %></li>
+          <% end %>
         </ul>
       </div>
     </div>
@@ -52,9 +54,17 @@
     <div class="container">
       <div class="footer-nav clearfix">
         <ul>
-          <li><%= link_to 'Home', '#' %></li>
-          <li><%= link_to 'Rate', '#' %></li>
-          <li><%= link_to 'Movie Update', '#' %></li>
+          <li><%= link_to 'Home', root_path %></li>
+          <li><%= link_to 'Movies', '/movies' %></li>
+          <li><%= link_to 'Genres', '/genres' %></li>
+          <li><%= link_to 'Oscars', '/oscars' %></li>
+          <li><%= link_to 'Actors', '/actors' %></li>
+          <li><%= link_to 'Directors', '/directors' %></li>
+          <% if @logged_in %>
+            <li><%= link_to 'Rate It!', '/rate' %></li>
+            <li><%= link_to 'Users', '/users' %></li>
+            <li><%= link_to 'Movie Update', '/movies' %></li>
+          <% end %>
         </ul>
       </div>
     </div>
