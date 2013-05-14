@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130513180307) do
+ActiveRecord::Schema.define(:version => 20130514054506) do
 
   create_table "classifieds", :id => false, :force => true do |t|
     t.integer  "mid",        :default => 0, :null => false
@@ -114,6 +114,11 @@ ActiveRecord::Schema.define(:version => 20130513180307) do
 
   add_index "roles", ["mid"], :name => "mid"
 
+  create_table "top_users", :id => false, :force => true do |t|
+    t.integer "uid"
+    t.date    "nomination_date"
+  end
+
   create_table "u_modify", :id => false, :force => true do |t|
     t.integer  "uid",        :default => 0, :null => false
     t.integer  "mid",        :default => 0, :null => false
@@ -134,6 +139,7 @@ ActiveRecord::Schema.define(:version => 20130513180307) do
   end
 
   add_index "u_ratings", ["mid"], :name => "fk_mid_u_ratings"
+  add_index "u_ratings", ["rating"], :name => "rating_index"
   add_index "u_ratings", ["uid", "mid"], :name => "unique_user_rating", :unique => true
   add_index "u_ratings", ["updated_at"], :name => "updated_at_index"
 

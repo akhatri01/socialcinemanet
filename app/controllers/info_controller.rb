@@ -7,6 +7,12 @@ class InfoController < ApplicationController
     @movies = Movie.find_by_sql ["select id, name, release_date, user_rating, user_rating_count
                                   from movies order by " + sort_by + " desc limit 20"
                                 ]
+    
+    @top_users = User.find_by_sql ["select u.* from ( select uid, count(1) as count_rate 
+                          from u_ratings where updated_at BETWEEN 
+                          date_format(NOW() - INTERVAL 1 MONTH, '\%Y-\%m-01') AND last_day(NOW() - INTERVAL 1 MONTH)  
+                          group by uid) dt JOIN users u on u.id=dt.uid order by dt.count_rate desc limit 3
+    "]
   end
   
   def search

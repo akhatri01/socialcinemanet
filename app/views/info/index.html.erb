@@ -4,8 +4,21 @@
 </pre>
 
 <% if @logged_in %>
-	<h3> Top 3 Users </h3>
-
+	<h3> Top 3 Users from Last Month </h3>
+		<table>
+		  <thead>
+		    <tr>
+		      <td>Name</td>
+		      <td>Number of Movies rated</td>
+		    </tr>
+		  </thead>
+		<tr>
+			<% @top_users.each do |user|%>
+				<td><%= user.fname + " " + user.mname + " " + user.lname%></td>
+				<td><%= user.u_ratings.where("updated_at between date_format(NOW() - INTERVAL 1 MONTH, '%Y-%m-01') AND last_day(NOW() - INTERVAL 1 MONTH)")%>
+			<% end %>
+		</tr>
+	</table>
 	<br>
 <% end %>
 
