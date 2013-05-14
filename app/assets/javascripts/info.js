@@ -131,5 +131,26 @@ function edit_rating() {
   return false;
 }
 
+function add_movie_global() {
+  $('#add-update-imdb').html("<form id='new-imdb-url-wrap' action=''><input type='text' id='new-imdb-url' placeholder='IMDB url'><input type='submit' class='submit'></form>");
+  $('#add-update-imdb').find('#new-imdb-url').focus();
+  $('#new-imdb-url-wrap').find('.submit').click(function() {
+    $.ajax({
+      type: "POST",
+      url: "/movie/imdb/global_update",
+      data: {imdb_url: $('#new-imdb-url').val()},
+      success: function(resp) {
+        if (resp === 'false') {
+          $('#add-update-imdb').append("<span style=\"color:red; font-size: 75%;\">Error finding the IMDB page. Please check URL and try again.</span>");
+        } else {
+          window.location.replace("/movie/" + resp);
+        }
+      }
+    });
+    return false; 
+  });
+}
+
+
 
 

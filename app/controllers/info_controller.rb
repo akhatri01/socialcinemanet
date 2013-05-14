@@ -177,5 +177,34 @@ class InfoController < ApplicationController
     # return render :text => imdb_url
     render :partial => 'movies/movie', :locals => {:movie => movie, :m_oscar => m_oscar, :p_oscar => p_oscar, :genre => genre, :movie_crew => movie_crew}
   end
+  
+  def ajax_imdb_global_update
+    imdb_url = params[:imdb_url]
+    /tt(\d+)/ =~ imdb_url
+    if !$1
+      return render :text => 'false'
+    else 
+      imdb_movie = Imdb::Movie.new($1)
+      if !imdb_movie
+        return render :text => 'false'
+      else
+        movie = Movie.find_by_name (imdb_movie.title)
+        if !movie
+          movie = Movie.new
+          movie.name = imdb_movie.title
+        end
+        movie.imdb_url = imdb_url
+        movie.poster_url = imdb_movie.poster
+        movie.imdb_rating = imdb_movie.rating
+        movie.plot = imdb_movie.plot
+        movie.release_date = DateTime.strptime(imdb_movie.year.to_s, "%Y")
+        if movie.save
+          return render :text => movie.id.to_s
+        else
+          return render :text => 'false'
+        end
+      end
+    end
+  end
 
 end

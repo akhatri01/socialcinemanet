@@ -1,6 +1,8 @@
+<% if @logged_in %>
 <div id="add-update-imdb">
-  
+  <%= link_to_function '+ add/update movie', 'add_movie_global()' %>
 </div>
+<% end %>
 
 <div id="sort-movies" class="sort">
   Sort by:

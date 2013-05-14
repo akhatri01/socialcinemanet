@@ -503,6 +503,43 @@ label {
   }
 }
 
+#add-update-imdb {
+  margin: 0 0 15px 0;
+  a {
+    display: inline-block;
+    padding: 5px;
+    color: #777;
+    font-size: 80%;
+    line-height: 100%;
+    border: 1px solid #f0f0f0;
+    text-decoration: none;
+    &:hover {
+      border: 1px solid #999;
+      background: none;
+      color: #333;
+    }
+  }
+  #new-imdb-url {
+    height: 18px;
+    line-height: 18px;
+    border: 1px solid #a6afb9;
+    border-right: none;
+    outline: none;
+    padding: 0px 5px 0;
+    margin: 0;
+    font-size: 75%;
+  }
+  .submit {
+    height: 20px;
+    @include linear-gradient(#adc0ff 0%, #3e549d 4%, #1e306d 100%, $fallback: #1e306d);
+    outline: none;
+    border: 1px solid #000;
+    @include border-right-radius(2px);
+    color: white;
+    font-size: 75%;
+  }
+}
+
 .small-info {
   color: #999;
   font-size: 8pt;
