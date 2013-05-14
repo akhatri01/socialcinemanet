@@ -1,4 +1,82 @@
 class PeopleController < ApplicationController
+  def actors
+    @actors_count = ActiveRecord::Base.connection.execute("SELECT count(*) FROM roles WHERE role_name='actor' GROUP BY pid").count
+    @max_pages = (@actors_count / 20) + 1
+    
+    @idx = params[:idx].to_i
+    @idx = @idx <= 0 ? 1 : @idx
+    @idx_prev = @idx <= 1 ? nil : @idx-1
+    @idx_next = @idx >= @max_pages ? nil : @idx+1
+    
+    if @idx <= 3 
+      @page_nums = [ 1, 2, 3, 4, 5]
+    elsif @idx >= @max_pages - 2
+      @page_nums = [ @max_pages-4, @max_pages-3, @max_pages-2, @max_pages-1, @max_pages]
+    else
+      @page_nums = [ @idx - 2, @idx - 1, @idx, @idx + 1, @idx + 2]
+    end
+    @actors = Person.find_by_sql ["SELECT p.* FROM roles, persons p WHERE p.id = roles.pid and role_name='actor' GROUP BY roles.pid ORDER BY roles.pid LIMIT ?,?", (@idx-1)*20, 20]
+  end
+  
+  def actor    
+    @actor = Person.find(params[:id])
+    @movies_count = ActiveRecord::Base.connection.execute("SELECT * FROM roles WHERE role_name='actor' AND pid=" + params[:id] + "").count
+    @max_pages = (@movies_count / 20) + 1
+    
+    @idx = params[:idx].to_i
+    @idx = @idx <= 0 ? 1 : @idx
+    @idx_prev = @idx <= 1 ? nil : @idx-1
+    @idx_next = @idx >= @max_pages ? nil : @idx+1
+    
+    if @idx <= 3 
+      @page_nums = [ 1, 2, 3, 4, 5]
+    elsif @idx >= @max_pages - 2
+      @page_nums = [ @max_pages-4, @max_pages-3, @max_pages-2, @max_pages-1, @max_pages]
+    else
+      @page_nums = [ @idx - 2, @idx - 1, @idx, @idx + 1, @idx + 2]
+    end
+    @movies = Movie.find_by_sql ["SELECT m.* FROM roles, movies m WHERE m.id = roles.mid AND roles.pid=? AND role_name='actor' ORDER BY roles.pid LIMIT ?,?", params[:id], (@idx-1)*20, 20]
+  end
+  
+  def directors
+    @directors_count = ActiveRecord::Base.connection.execute("SELECT count(*) FROM roles WHERE role_name='director' GROUP BY pid").count
+    @max_pages = (@directors_count / 20) + 1
+    
+    @idx = params[:idx].to_i
+    @idx = @idx <= 0 ? 1 : @idx
+    @idx_prev = @idx <= 1 ? nil : @idx-1
+    @idx_next = @idx >= @max_pages ? nil : @idx+1
+    
+    if @idx <= 3 
+      @page_nums = [ 1, 2, 3, 4, 5]
+    elsif @idx >= @max_pages - 2
+      @page_nums = [ @max_pages-4, @max_pages-3, @max_pages-2, @max_pages-1, @max_pages]
+    else
+      @page_nums = [ @idx - 2, @idx - 1, @idx, @idx + 1, @idx + 2]
+    end
+    @directors = Person.find_by_sql ["SELECT p.* FROM roles, persons p WHERE p.id = roles.pid and role_name='director' GROUP BY roles.pid ORDER BY roles.pid LIMIT ?,?", (@idx-1)*20, 20]
+  end
+  
+  def director    
+    @director = Person.find(params[:id])
+    @movies_count = ActiveRecord::Base.connection.execute("SELECT * FROM roles WHERE role_name='director' AND pid=" + params[:id] + "").count
+    @max_pages = (@movies_count / 20) + 1
+    
+    @idx = params[:idx].to_i
+    @idx = @idx <= 0 ? 1 : @idx
+    @idx_prev = @idx <= 1 ? nil : @idx-1
+    @idx_next = @idx >= @max_pages ? nil : @idx+1
+    
+    if @idx <= 3 
+      @page_nums = [ 1, 2, 3, 4, 5]
+    elsif @idx >= @max_pages - 2
+      @page_nums = [ @max_pages-4, @max_pages-3, @max_pages-2, @max_pages-1, @max_pages]
+    else
+      @page_nums = [ @idx - 2, @idx - 1, @idx, @idx + 1, @idx + 2]
+    end
+    @movies = Movie.find_by_sql ["SELECT m.* FROM roles, movies m WHERE m.id = roles.mid AND roles.pid=? AND role_name='director' ORDER BY roles.pid LIMIT ?,?", params[:id], (@idx-1)*20, 20]
+  end
+  
   # GET /people
   # GET /people.json
   def index

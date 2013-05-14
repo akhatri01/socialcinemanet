@@ -1,0 +1,52 @@
+<div>
+  <strong>Showing all actors</strong>
+</div>
+<p>
+  Total number of actors: <%= number_with_delimiter @actors_count %>
+  <br />
+  Page <%= number_with_delimiter @idx %>
+  of
+  <%= number_with_delimiter (@max_pages == 0 ? 1 : @max_pages) %>
+</p>
+<table>
+  <thead>
+    <tr>
+      <td>id</td>
+      <td>Fname</td>
+      <td>Mname</td>
+      <td>Lname</td>
+    </tr>
+  </thead>
+
+<% @actors.each do |actor| %>
+  <tr>
+    <td><%= link_to actor.id, '/actor/' + actor.id.to_s %></td>
+    <td><%= actor.fname %></td>
+    <td><%= actor.mname %></td>
+    <td><%= actor.lname %></td>
+  </tr>
+<% end %>
+</table>
+<div class="pagination">
+  <% if @idx != 1 %>
+    <%= link_to "First", {:controller => "people", :action => "actors", :idx => 1 } %>
+  <% end %>
+  <% if @idx_prev %>
+    <%= link_to "Prev", {:controller => "people", :action => "actors", :idx => @idx_prev } %>
+  <% end %>
+  <% if @idx > 3 %>
+    ...
+  <% end %>
+  <% @page_nums.each do |page| %>
+    <%= link_to page.to_s, {:controller => "people", :action => "actors", :idx => page } %>
+  <% end %>
+  <% if @idx != @max_pages %>
+    ...
+  <% end %>
+  <% if @idx_next %>
+    <%= link_to "Next", {:controller => "people", :action => "actors", :idx => @idx_next } %>
+  <% end %>
+  <% if @idx < @max_pages - 2 %>
+    <%= link_to "Last", {:controller => "people", :action => "actors", :idx => @max_pages } %>
+  <% end %>
+</div>

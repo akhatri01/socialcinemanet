@@ -1,0 +1,52 @@
+<div>
+  <strong>Showing all directors</strong>
+</div>
+<p>
+  Total number of directors: <%= number_with_delimiter @directors_count %>
+  <br />
+  Page <%= number_with_delimiter @idx %>
+  of
+  <%= number_with_delimiter (@max_pages == 0 ? 1 : @max_pages) %>
+</p>
+<table>
+  <thead>
+    <tr>
+      <td>id</td>
+      <td>Fname</td>
+      <td>Mname</td>
+      <td>Lname</td>
+    </tr>
+  </thead>
+
+<% @directors.each do |director| %>
+  <tr>
+    <td><%= link_to director.id, '/director/' + director.id.to_s %></td>
+    <td><%= director.fname %></td>
+    <td><%= director.mname %></td>
+    <td><%= director.lname %></td>
+  </tr>
+<% end %>
+</table>
+<div class="pagination">
+  <% if @idx != 1 %>
+    <%= link_to "First", {:controller => "people", :action => "directors", :idx => 1 } %>
+  <% end %>
+  <% if @idx_prev %>
+    <%= link_to "Prev", {:controller => "people", :action => "directors", :idx => @idx_prev } %>
+  <% end %>
+  <% if @idx > 3 %>
+    ...
+  <% end %>
+  <% @page_nums.each do |page| %>
+    <%= link_to page.to_s, {:controller => "people", :action => "directors", :idx => page } %>
+  <% end %>
+  <% if @idx != @max_pages %>
+    ...
+  <% end %>
+  <% if @idx_next %>
+    <%= link_to "Next", {:controller => "people", :action => "directors", :idx => @idx_next } %>
+  <% end %>
+  <% if @idx < @max_pages - 2 %>
+    <%= link_to "Last", {:controller => "people", :action => "directors", :idx => @max_pages } %>
+  <% end %>
+</div>

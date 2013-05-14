@@ -10,12 +10,13 @@ class Movie < ActiveRecord::Base
   has_many :m_nominated, :foreign_key => :mid
   has_many :movie_oscars, :through => :m_nominated, :source => :oscar
   
-  has_many :p_nominated, :foreign_key => :mid
+  has_many :p_nominated, :foreign_key => :mid, :select => "*"
   has_many :person_oscars, :through => :p_nominated, :source => :oscar
   
   has_many :classifieds, :foreign_key => :mid
   has_many :genres, :through => :classifieds, :source => :genre
   
+
   def self.top_250
     # Movie.find_by_sql ["SELECT *, AVERAGE(u.rating) FROM movies FORCE INDEX (movie_name_index) JOIN u_ratings u ON u.mid = movies.id WHERE name <> '' AND name IS NOT null LIMIT 10"]
   end

@@ -1,0 +1,44 @@
+Signed in as <strong><%= @current_user.fname + " " + @current_user.mname + " " + @current_user.lname %></strong>
+<br />
+Edit Profile
+<br /><br />
+<% if @message %>
+<div style="color:green">
+  <%= @message %>
+</div>
+<% end %>
+<% if @error %>
+<div style="color:red">
+  <%= @error %> Please try again.
+</div>
+<% end %>
+<%= form_for @edit_user, :url => edit_my_account_path do |f| %>
+<div>Name</div>
+<div class="name">
+  <%= f.text_field :fname, :placeholder => 'First Name', :class => 'users-field' %>
+  <%= f.text_field :mname, :placeholder => 'Middle Name', :class => 'users-field' %>
+  <%= f.text_field :lname, :placeholder => 'Last Name', :class => 'users-field' %>
+</div>
+<br />
+<div class="field">
+  <div>Birthday</div>
+  <%= f.date_select :dob, :start_year => 1900, :end_year => Time.now.year %>
+</div>
+<br />
+<div class="field">
+  <div>Email</div>
+  <%= f.text_field :email, :placeholder => 'Email', :class => 'users-field' %>
+</div>
+<br />
+<%= f.hidden_field :is_admin, :value => false %>
+<div class="actions">
+  <%= f.submit 'Save', :class => 'submit' %>
+</div>
+<% end %>
+<div class="myaccount-footer">
+<%= link_to 'Change Password', change_password_path %>
+&nbsp;&middot;&nbsp;
+<%= link_to 'Delete Account', delete_curr_user_path, :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+</div>
+
+

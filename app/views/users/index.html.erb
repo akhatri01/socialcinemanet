@@ -1,15 +1,29 @@
-<h1>Listing users</h1>
+<div>
+  <strong>Showing all users</strong>
+</div>
+<p>
+  Total number of users: <%= @user_count %>
+  <br />
+  Page <%= @idx %>
+  of
+  <%= number_with_delimiter (@max_pages == 0 ? 1 : @max_pages) %>
+</p>
+
 
 <table>
-  <tr>
-    <th>Fname</th>
-    <th>Mname</th>
-    <th>Lname</th>
-    <th>Dob</th>
-  </tr>
+  <thead>
+    <tr>
+      <td>id</td>
+      <td>Fname</td>
+      <td>Mname</td>
+      <td>Lname</td>
+      <td>Dob</td>
+    </tr>
+  </thead>
 
 <% @users.each do |user| %>
   <tr>
+    <td><%= user.id %></td>
     <td><%= user.fname %></td>
     <td><%= user.mname %></td>
     <td><%= user.lname %></td>
@@ -17,4 +31,27 @@
   </tr>
 <% end %>
 </table>
+<div class="pagination">
+  <% if @idx != 1 %>
+    <%= link_to "First", {:controller => "users", :action => "index", :idx => 1 } %>
+  <% end %>
+  <% if @idx_prev %>
+    <%= link_to "Prev", {:controller => "users", :action => "index", :idx => @idx_prev } %>
+  <% end %>
+  <% if @idx > 3 %>
+    ...
+  <% end %>
+  <% @page_nums.each do |page| %>
+    <%= link_to page.to_s, {:controller => "users", :action => "index", :idx => page } %>
+  <% end %>
+  <% if @idx != @max_pages %>
+    ...
+  <% end %>
+  <% if @idx_next %>
+    <%= link_to "Next", {:controller => "users", :action => "index", :idx => @idx_next } %>
+  <% end %>
+  <% if @idx < @max_pages - 2 %>
+    <%= link_to "Last", {:controller => "users", :action => "index", :idx => @max_pages } %>
+  <% end %>
+</div>
 

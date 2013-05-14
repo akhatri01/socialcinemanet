@@ -9,6 +9,11 @@
   </select>
 </div>
 
+<p>
+  Page <%= @idx %>
+  of
+  <%= number_with_delimiter @max_pages+1 %>
+</p>
 <table>
   <thead>
     <tr>
@@ -46,24 +51,24 @@
 <div class="pagination">
   <% vars = { :sort_by => @sort_by } %>
   <% if @idx != 1 %>
-    <%= link_to "First", {:controller => "info", :action => "index", :idx => 1 }.merge(vars) %>
+    <%= link_to "First", {:controller => "movies", :action => "index", :idx => 1 }.merge(vars) %>
   <% end %>
   <% if @idx_prev %>
-    <%= link_to "Prev", {:controller => "info", :action => "index", :idx => @idx_prev }.merge(vars) %>
+    <%= link_to "Prev", {:controller => "movies", :action => "index", :idx => @idx_prev }.merge(vars) %>
   <% end %>
   <% if @idx > 3 %>
     ...
   <% end %>
   <% @page_nums.each do |page| %>
-    <%= link_to page.to_s, {:controller => "info", :action => "index", :idx => page }.merge(vars) %>
+    <%= link_to page.to_s, {:controller => "movies", :action => "index", :idx => page }.merge(vars) %>
   <% end %>
   <% if @idx != @max_pages %>
     ...
   <% end %>
   <% if @idx_next %>
-    <%= link_to "Next", {:controller => "info", :action => "index", :idx => @idx_next }.merge(vars) %>
+    <%= link_to "Next", {:controller => "movies", :action => "index", :idx => @idx_next }.merge(vars) %>
   <% end %>
   <% if @idx < @max_pages - 2 %>
-    <%= link_to "Last", {:controller => "info", :action => "index", :idx => @max_pages }.merge(vars) %>
+    <%= link_to "Last", {:controller => "movies", :action => "index", :idx => @max_pages }.merge(vars) %>
   <% end %>
 </div>

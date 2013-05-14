@@ -1,29 +1,78 @@
-<h1>Listing movies</h1>
+<div id="add-update-imdb">
+  
+</div>
 
+<div id="sort-movies" class="sort">
+  Sort by:
+  <select>
+    <option value="title" <%= if @sort_by == 'name' then "selected=\"selected\"" end %> >Title</option>
+    <option value="year" <%= if @sort_by == 'year' then "selected=selected" end %> >Year</option>
+    <option value="imdb_rating" <%= if @sort_by == 'imdb_rating' then "selected=selected" end %> >IMDB Rating</option>
+    <option value="user_rating" <%= if @sort_by == 'user_rating' then "selected=selected" end %> >User Rating (highest rated)</option>
+    <option value="user_rating_number" <%= if @sort_by == 'user_rating_number' then "selected=selected" end %> >User Rating (most rated)</option>
+  </select>
+</div>
+
+<p>
+  Page <%= @idx %>
+  of
+  <%= number_with_delimiter (@max_pages == 0 ? 1 : @max_pages) %>
+</p>
 <table>
-  <tr>
-    <th>Name</th>
-    <th>Release date</th>
-    <th>Imdb rating</th>
-    <th>Length</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
+  <thead>
+    <tr>
+      <td>ID</td>
+      <td>Title</td>
+      <td>Year</td>
+      <td>IMDB Rating</td>
+      <td>User Rating</td>
+      <td>Genre</td>
+    </tr>
+  </thead>
 <% @movies.each do |movie| %>
   <tr>
-    <td><%= movie.name %></td>
-    <td><%= movie.release_date %></td>
-    <td><%= movie.imdb_rating %></td>
-    <td><%= movie.length %></td>
-    <td><%= link_to 'Show', movie %></td>
-    <td><%= link_to 'Edit', edit_movie_path(movie) %></td>
-    <td><%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+    <td>
+      <%= movie.id %>
+    </td>
+    <td class="title">
+      <%= link_to movie.name.titleize, movie_show_path(movie.id) %>
+    </td>
+    <td>
+      <%= movie.release_date.year %>
+    </td>
+    <td class="imdb-rating">
+      <%= movie.imdb_rating || "-" %>
+    </td>
+    <td class="user-rating">
+      <%= render :partial => 'movies/user_rating', :locals => {:movie => movie } %>
+    </td>
+    <td>
+      <%= movie.genre[0].category rescue "-" %>
+    </td>
+</tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Movie', new_movie_path %>
+<div class="pagination">
+  <% vars = { :sort_by => @sort_by } %>
+  <% if @idx != 1 %>
+    <%= link_to "First", {:controller => "movies", :action => "index", :idx => 1 }.merge(vars) %>
+  <% end %>
+  <% if @idx_prev %>
+    <%= link_to "Prev", {:controller => "movies", :action => "index", :idx => @idx_prev }.merge(vars) %>
+  <% end %>
+  <% if @idx > 3 %>
+    ...
+  <% end %>
+  <% @page_nums.each do |page| %>
+    <%= link_to page.to_s, {:controller => "movies", :action => "index", :idx => page }.merge(vars) %>
+  <% end %>
+  <% if @idx != @max_pages %>
+    ...
+  <% end %>
+  <% if @idx_next %>
+    <%= link_to "Next", {:controller => "movies", :action => "index", :idx => @idx_next }.merge(vars) %>
+  <% end %>
+  <% if @idx < @max_pages - 2 %>
+    <%= link_to "Last", {:controller => "movies", :action => "index", :idx => @max_pages }.merge(vars) %>
+  <% end %>
+</div>

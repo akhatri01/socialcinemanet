@@ -1,14 +1,12 @@
-<p id="notice"><%= notice %></p>
-
+<div>
+  Director: <strong><%= (@director.fname + " " + @director.mname + " " + @director.lname).titleize %></strong>
+  <br />
+  Showing movies that <%= (@director.fname + " " + @director.mname + " " + @director.lname).titleize %> acted in
+</div>
 <p>
-  <b>Genre:</b>
-  <%= @genre.category %>
-  <br>
-  <b>Results:</b> 
-  <%= number_with_delimiter @genre_movie_count %>
-</p>
-<p>
-  Page <%= @idx %>
+  Total number of movies: <%= number_with_delimiter @movies_count %>
+  <br />
+  Page <%= number_with_delimiter @idx %>
   of
   <%= number_with_delimiter (@max_pages == 0 ? 1 : @max_pages) %>
 </p>
@@ -48,24 +46,24 @@
 </table>
 <div class="pagination">
   <% if @idx != 1 %>
-    <%= link_to "First", {:controller => "genres", :action => "show", :idx => 1 } %>
+    <%= link_to "First", {:controller => "people", :action => "director", :id => @director.id, :idx => 1 } %>
   <% end %>
   <% if @idx_prev %>
-    <%= link_to "Prev", {:controller => "genres", :action => "show", :idx => @idx_prev } %>
+    <%= link_to "Prev", {:controller => "people", :action => "director", :id => @director.id, :idx => @idx_prev } %>
   <% end %>
   <% if @idx > 3 %>
     ...
   <% end %>
   <% @page_nums.each do |page| %>
-    <%= link_to page.to_s, {:controller => "genres", :action => "show", :idx => page } %>
+    <%= link_to page.to_s, {:controller => "people", :action => "director", :id => @director.id, :idx => page } %>
   <% end %>
   <% if @idx != @max_pages %>
     ...
   <% end %>
   <% if @idx_next %>
-    <%= link_to "Next", {:controller => "genres", :action => "show", :idx => @idx_next } %>
+    <%= link_to "Next", {:controller => "people", :action => "director", :id => @director.id, :idx => @idx_next } %>
   <% end %>
   <% if @idx < @max_pages - 2 %>
-    <%= link_to "Last", {:controller => "genres", :action => "show", :idx => @max_pages } %>
+    <%= link_to "Last", {:controller => "people", :action => "director", :id => @director.id, :idx => @max_pages } %>
   <% end %>
 </div>

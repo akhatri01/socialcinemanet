@@ -19,6 +19,23 @@ class GenresController < ApplicationController
   # GET /genres/1.json
   def show
     @genre = Genre.find(params[:id])
+    @genre_movie_count = @genre.movies.count
+    @max_pages = (@genre_movie_count / 20) + 1
+    
+    @idx = params[:idx].to_i
+    @idx = @idx <= 0 ? 1 : @idx
+    @idx_prev = @idx <= 1 ? nil : @idx-1
+    @idx_next = @idx >= @max_pages ? nil : @idx+1
+    
+    if @idx <= 3 
+      @page_nums = [ 1, 2, 3, 4, 5]
+    elsif @idx >= @max_pages - 2
+      @page_nums = [ @max_pages-4, @max_pages-3, @max_pages-2, @max_pages-1, @max_pages]
+    else
+      @page_nums = [ @idx - 2, @idx - 1, @idx, @idx + 1, @idx + 2]
+    end
+    
+    @movies = @genre.movies.offset((@idx-1)*20).limit(20)
 
     respond_to do |format|
       format.html # show.html.erb
