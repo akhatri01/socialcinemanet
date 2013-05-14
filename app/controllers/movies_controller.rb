@@ -36,10 +36,10 @@ class MoviesController < ApplicationController
   # GET /movies/1.json
   def show
     @movie = Movie.find(params[:id])
-	@m_oscar = Movie.find(params[:id]).movie_oscars
-	@p_oscar = Movie.find(params[:id]).person_oscars
-	@genre = Movie.find(params[:id]).genre
-	@movie_crew = Movie.find(params[:id]).persons
+	  @m_oscar = Movie.m_oscar(params[:id])
+	  @p_oscar = Movie.p_oscar(params[:id])
+	  @genre = Movie.find(params[:id]).genre
+	  @movie_crew = Movie.find(params[:id]).persons
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @movie }

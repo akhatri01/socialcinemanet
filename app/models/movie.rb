@@ -16,6 +16,19 @@ class Movie < ActiveRecord::Base
   has_many :classifieds, :foreign_key => :mid
   has_many :genres, :through => :classifieds, :source => :genre
   
+
+  def self.top_250
+    # Movie.find_by_sql ["SELECT *, AVERAGE(u.rating) FROM movies FORCE INDEX (movie_name_index) JOIN u_ratings u ON u.mid = movies.id WHERE name <> '' AND name IS NOT null LIMIT 10"]
+  end
+  
+  def self.p_oscar(id)
+      ActiveRecord::Base.connection.execute "select o.category, pn.year, pn.win from p_nominated pn, oscars o where pn.oid = o.id and pn.mid=#{id}"
+  end
+  
+  def self.m_oscar(id)
+       ActiveRecord::Base.connection.execute "select o.category, mn.year, mn.win from m_nominated mn, oscars o where mn.oid = o.id and mn.mid = #{id}"
+   end
+   
   def user_rating
     sum = 0
     cnt = 0

@@ -134,7 +134,10 @@ ActiveRecord::Schema.define(:version => 20130513180307) do
   end
 
   add_index "u_ratings", ["mid"], :name => "fk_mid_u_ratings"
+
+
   add_index "u_ratings", ["rating"], :name => "rating_index"
+
   add_index "u_ratings", ["uid", "mid"], :name => "unique_user_rating", :unique => true
   add_index "u_ratings", ["updated_at"], :name => "updated_at_index"
 

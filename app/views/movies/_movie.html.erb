@@ -87,12 +87,14 @@
         Movie Crew
       </div>
       <div class="right">
-        <%= if movie_crew.empty? then '-' end %>
+        <% if (movie_crew.empty?) %>
+ 					-
+ 				<% end %>
         <% movie_crew.each do |mc| %>
-			<%= mc['fname']%>
-			<%= mc['lname'] %>
-			<br>
-		<% end %>
+					<%= mc['fname']%>
+					<%= mc['lname'] %>
+					<br>
+				<% end %>
       </div>
     </div>
 	
@@ -101,16 +103,54 @@
         Oscar Nominations
       </div>
       <div class="right">
-		<%= if m_oscar.empty? and p_oscar.empty? then '-' end %>
-        <% m_oscar.each do |m_o| %>
-			<%= m_o['category'] %>
-			<br>
-		<% end %>
-		<% p_oscar.each do |p_o| %>
-			<%= p_o['category'] %>
-			<br>
-		<% end %>
-      </div>
+			<!-- Checking if the oscars exists -->
+			
+				<% count=0 %>
+				<% m_oscar.each do%>
+					<% count += 1%>
+				<% end %>
+				
+				<% p_oscar.each do%>
+					<% count += 1%>
+				<% end %>
+				
+				<% if count==0 %>
+				-
+				<% else %>
+					<table>
+						<thead>
+							<td>Category</td>
+							<td>Year</td>
+							<td>Win</td>
+						</thead>
+						
+						<% m_oscar.each do |m_o| %>
+							<tr>
+								<td><%= m_o[0] %> </td>
+								<td><%= m_o[1] %>	 </td>
+								<td><% if m_o[2]==0 %>
+										false
+									<%else%>
+										true
+										<% end %>
+									</td>
+							</tr>
+						<% end %>
+							
+						<% p_oscar.each do |p_o| %>
+							<tr>
+								<td><%= p_o[0] %></td>
+								<td><%= p_o[1] %></td>
+								<td><% if p_o[2]==0 %>
+										false
+									<%else%>
+										true
+										<% end %></td>
+							</tr>
+						<% end %>
+					</table>
+				<% end %>
+			</div>
     </div>
 	
 	<div class="row clearfix">
@@ -118,10 +158,10 @@
         Genre
       </div>
       <div class="right">
-	  <%= if genre.empty? then '-' end %>
-        <% genre.each do |g| %>
-			<%= g['category'] %>
-		<% end %>
+			<%= if genre.empty? then '-' end %>
+    	<% genre.each do |g| %>
+				<%= g['category'] %>
+			<% end %>
 			
       </div>
     </div>
