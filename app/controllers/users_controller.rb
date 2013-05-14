@@ -100,8 +100,11 @@ class UsersController < ApplicationController
     @archive_user.password = @current_user.password
     @archive_user.created_at = @current_user.created_at
     @archive_user.updated_at = @current_user.updated_at
-    if @archive_user.save
-      @current_user.destroy
+    ActiveRecord::Base.transaction do
+      if @archive_user.save
+        ActiveRecord::Base.connection.execute "DELETE FROM u_ratings WHERE uid="+@current_user.id.to_s
+        @current_user.destroy
+      end
     end
     redirect_to root_url
   end
