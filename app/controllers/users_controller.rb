@@ -117,8 +117,6 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.limit(10).all
-    
     @user_count = User.count
     @max_pages = @user_count / 20
     

@@ -3,5 +3,19 @@
 <span style="font-weight: normal; color: #999;">
   &middot;
   <% count = movie.u_ratings.count %>
-  <%= count %><%= count > 1 ? ' votes' : ' vote' %></span>
+  <% if count > 0 %>
+    <a href="#" id="show-who-voted" onClick="show_who_voted(); return false;"><%= count %><%= count > 1 ? ' votes' : ' vote' %></a></span> 
+    <div id="who-voted">
+      <table>
+        <% movie.u_ratings.each do |u_r| %>
+        <tr>
+          <% user = u_r.user %>
+          <td><%= user.fname + " " + user.mname + " " + user.lname %></td><td><strong><%= u_r.rating %></td></li>
+          <% end %>
+        </tr>
+      </table>
+    </div>
+  <% else%>
+    <%= count %><%= count > 1 ? ' votes' : ' vote' %></span>
+  <% end %>
 <% end %>

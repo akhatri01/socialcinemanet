@@ -1,7 +1,7 @@
 <div>
   Director: <strong><%= (@director.fname + " " + @director.mname + " " + @director.lname).titleize %></strong>
   <br />
-  Showing movies that <%= (@director.fname + " " + @director.mname + " " + @director.lname).titleize %> acted in
+  Showing movies that <%= (@director.fname + " " + @director.mname + " " + @director.lname).titleize %> directed
 </div>
 <p>
   Total number of movies: <%= number_with_delimiter @movies_count %>

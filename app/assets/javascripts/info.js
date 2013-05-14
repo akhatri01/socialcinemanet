@@ -151,6 +151,10 @@ function add_movie_global() {
   });
 }
 
+function show_who_voted() {
+  $('#who-voted').toggle();
+}
+
 
 
 

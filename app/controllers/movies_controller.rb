@@ -48,6 +48,10 @@ class MoviesController < ApplicationController
   
   def rate
     @movie = Movie.find(params[:id])
+	  @m_oscar = Movie.m_oscar(params[:id])
+	  @p_oscar = Movie.p_oscar(params[:id])
+	  @genre = Movie.find(params[:id]).genre
+	  @movie_crew = Movie.find(params[:id]).persons
     urating = URating.where("uid = ? AND mid = ?", @current_user.id, params[:id].to_i).first
     if !urating
       urating = URating.new
@@ -61,7 +65,7 @@ class MoviesController < ApplicationController
       urating.save
       ActiveRecord::Base.connection.execute "UPDATE movies m LEFT JOIN (SELECT mid, AVG(rating) as average, COUNT(rating) as cnt FROM u_ratings u WHERE u.mid = " + urating.mid.to_s + " GROUP BY mid) res ON res.mid = m.id SET user_rating=res.average, user_rating_count=res.cnt WHERE m.id=" + urating.mid.to_s
     end
-    render :partial => 'movies/movie', :locals => {:movie => @movie}
+    render :partial => 'movies/movie', :locals => {:movie => @movie, :genre => @genre, :m_oscar => @m_oscar, :p_oscar => @p_oscar, :movie_crew => @movie_crew }
   end
 
   # GET /movies/new

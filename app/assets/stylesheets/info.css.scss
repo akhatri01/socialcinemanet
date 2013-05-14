@@ -552,6 +552,29 @@ pre {
   font-size: 90%;
 }
 
+#who-voted {
+  display: none;
+  table {
+    margin: 0 0 0 20px !important;
+    width: 300px;
+    list-style: none;
+    margin: 0; padding: 0;
+    border: none;
+  }
+  td:first-child {
+    font-size: 80%;
+    line-height: 100%;
+    width: 25px;
+    border: none;
+  }
+  td:last-child {
+    font-size: 80%;
+    line-height: 100%;
+    width: 20px;
+    border: none;
+  }
+}
+
 .small-info {
   color: #999;
   font-size: 8pt;
