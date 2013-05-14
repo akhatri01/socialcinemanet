@@ -14,7 +14,7 @@ namespace :parse do
       next if idx == 0
       if start_idx != nil then if idx < start_idx then next end end
       if end_idx != nil then if idx > end_idx then next end end
-      did_win = /(WIN)/.match(row[4]) ? true : false
+      did_win = /(YES)/.match(row[4]) ? true : false
       /(\d\d\d\d)/ =~ row[0]
       year = $1.to_i
       

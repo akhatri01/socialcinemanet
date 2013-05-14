@@ -39,6 +39,9 @@ SocialCinemaNet::Application.routes.draw do
   match 'directors' => 'people#directors', :as => 'directors'
   match 'director/:id' => 'people#director', :as => 'director'
   
+  match 'oscars' => 'oscars#index', :as => 'oscars'
+  match 'oscar/:id' => 'oscars#show', :as => 'oscar_show'
+  
   root :to => 'info#index'
 
 
