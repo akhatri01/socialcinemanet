@@ -13,13 +13,13 @@
       <div id="user-links">
         <ul>
           <% if @logged_in %>
-			<li><%= @current_user.lname%></li>
-            <li><%= link_to 'Logout', logout_path, :method => :delete %></li>
+          <li><%= @current_user.lname %></li>
+          <li><%= link_to 'My Account', '/user/myaccount' %></li>
+          <li><%= link_to 'Logout', logout_path, :method => :delete %></li>
           <% else %>
-            <li><%= link_to 'Register', '/register' %></li>
-            <li><%= link_to 'Login', '/login' %></li>
+          <li><%= link_to 'Register', '/register' %></li>
+          <li><%= link_to 'Login', '/login' %></li>
           <% end %>
-            <li><%= link_to 'Help', '#' %></li>
         </ul>
       </div>
       <div id="logo"><%= image_tag 'logo.png', :width => 188, :height => 21 %><!-- SocialCinemaNet --></div>
@@ -30,13 +30,13 @@
       <div id="nav" class="clearfix">
         <ul class="clearfix">
           <li><%= link_to 'Home', root_path %></li>
-          <li><%= link_to 'Movies', '#' %></li>
+          <li><%= link_to 'Movies', '/movies' %></li>
           <li><%= link_to 'Genres', '/genres' %></li>
+          <li><%= link_to 'Oscars', '#' %></li>
           <li><%= link_to 'Actors', '#' %></li>
           <li><%= link_to 'Directors', '#' %></li>
           <li><%= link_to 'Rate It!', '/rate' %></li>
           <li><%= link_to 'Users', '/users' %></li>
-          <li><%= link_to 'Notifications', '#' %></li>
         </ul>
       </div>
     </div>

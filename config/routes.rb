@@ -19,6 +19,7 @@ SocialCinemaNet::Application.routes.draw do
   
   match 'rate' => 'info#rate_it'
   
+  match 'movies' => 'movies#index'
   match 'movie/imdb/update' => 'info#ajax_imdb_update'
   match 'movie/:id' => 'movies#show', :as => 'movie_show'
   match 'movie/:id/rate' => 'movies#rate', :as => 'movie_rate'
@@ -27,6 +28,11 @@ SocialCinemaNet::Application.routes.draw do
   match 'genres/:id' => 'genres#show', :as => 'genre_show'
   
   match 'users' => 'users#index'
+  match 'user/myaccount' => 'users#myaccount', :as => 'myaccount'
+  match 'user/myaccount/edit' => 'users#myaccountedit', :via => :put, :as => 'edit_my_account'
+  match 'user/myaccount/changepassword' => 'users#change_password', :as => 'change_password'
+  match 'user/myaccount/changepassword/action' => 'users#change_password_action', :via => :put, :as => 'change_password_action'
+  match 'user/myaccount/delete_curr_user' => 'users#delete_curr_user', :via => :delete, :as => 'delete_curr_user'
 
   root :to => 'info#index'
 

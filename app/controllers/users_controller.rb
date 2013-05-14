@@ -49,6 +49,63 @@ class UsersController < ApplicationController
     end
   end
   
+  def myaccount
+    if !logged_in?
+      redirect_to login_url
+    end
+    @message = params[:message]
+    @error = params[:error]
+    @edit_user = @current_user
+  end
+  
+  def myaccountedit
+    if !logged_in?
+      redirect_to login_url
+    end
+    if @current_user.update_attributes(params[:user])
+      redirect_to myaccount_path(:message => "Account updated.")
+    else
+      redirect_to myaccount_path(:error => "Account update error.")
+    end
+  end
+  
+  def change_password
+    if !logged_in?
+      redirect_to login_url
+    end
+    @error = params[:error]
+  end
+  
+  def change_password_action
+    if (params[:current_password] == '' || params[:new_password] == '' || params[:new_password_confirm] == '')
+      redirect_to change_password_path(:error => "Fill in all fields.")
+    elsif (params[:current_password] != @current_user.password)
+      redirect_to change_password_path(:error => "Current password is incorrect.")
+    elsif params[:new_password] != params[:new_password_confirm]
+      redirect_to change_password_path(:error => "New password confirmation mismatch.")
+    else
+      @current_user.password = params[:new_password]
+      @current_user.save
+      redirect_to myaccount_path(:message => "Password updated.")
+    end
+  end
+  
+  def delete_curr_user
+    @archive_user = CreateUsersArchive.new
+    @archive_user.id = @current_user.id
+    @archive_user.fname = @current_user.fname
+    @archive_user.mname = @current_user.mname
+    @archive_user.lname = @current_user.lname
+    @archive_user.dob = @current_user.dob
+    @archive_user.password = @current_user.password
+    @archive_user.created_at = @current_user.created_at
+    @archive_user.updated_at = @current_user.updated_at
+    if @archive_user.save
+      @current_user.destroy
+    end
+    redirect_to root_url
+  end
+  
   def logout
     session[:current_user_id] = nil
     redirect_to root_url
