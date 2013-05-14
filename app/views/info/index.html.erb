@@ -12,12 +12,15 @@
 		      <td>Number of Movies rated</td>
 		    </tr>
 		  </thead>
-		<tr>
+		
 			<% @top_users.each do |user|%>
-				<td><%= User.find(user[0]).fname%></td>
-				<td><%= user[1]%>
+				<% u = User.find(user[0])%>
+				<tr>
+					<td><%= u.fname + " "  + u.mname + " " + u.lname%></td>
+					<td><%= user[1]%>
+				</tr>
 			<% end %>
-		</tr>
+	
 	</table>
 	<br>
 <% end %>

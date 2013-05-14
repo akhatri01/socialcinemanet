@@ -8,12 +8,11 @@ class InfoController < ApplicationController
                                   from movies order by " + sort_by + " desc limit 20"
                                 ]
     
-    @top_users = User.find_by_sql ["select u.* from ( select uid, count(1) as count_rate 
+    @top_users = ActiveRecord::Base.connection.execute "select * from ( select uid, count(1) as count_rate 
                           from u_ratings where updated_at BETWEEN 
                           DATE_SUB(LAST_DAY(DATE_SUB(NOW(), INTERVAL 1 MONTH)),INTERVAL DAY(LAST_DAY(DATE_SUB(NOW(), INTERVAL 1 MONTH)))-1 DAY)
                            AND LAST_DAY(DATE_SUB(NOW(), INTERVAL 1 MONTH)) 
-                          group by uid) dt JOIN users u on u.id=dt.uid order by dt.count_rate desc limit 3
-    "]
+                          group by uid) dt order by dt.count_rate desc limit 3"
   end
   
   def search
