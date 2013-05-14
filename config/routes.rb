@@ -41,6 +41,10 @@ SocialCinemaNet::Application.routes.draw do
   
   match 'oscars' => 'oscars#index', :as => 'oscars'
   match 'oscar/:id' => 'oscars#show', :as => 'oscar_show'
+  match 'oscar/:id/m_winner/:year' => 'oscars#m_nom_winner', :as => 'm_nom_winner'
+  match 'oscar/:id/p_winner/:year' => 'oscars#p_nom_winner', :as => 'p_nom_winner'
+  match 'oscar/:id/m_nom/:year' => 'oscars#m_nom', :as => 'm_nom'
+  match 'oscar/:id/p_nom/:year' => 'oscars#p_nom', :as => 'p_nom'
   
   root :to => 'info#index'
 

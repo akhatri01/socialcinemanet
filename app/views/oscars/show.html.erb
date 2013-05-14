@@ -1,4 +1,39 @@
 <p>
   <b>Category:</b>
   <%= @oscar.category %>
+  <table>
+    <thead>
+      <tr>
+        <td>Year</td>
+        <td>Winner</td>
+        <td>Nominations</td>
+      </tr>
+    </thead>
+  <% @oscar.m_nominated.group(:year).order('year DESC').each do |m_o| %>
+    <tr>
+      <td>
+        <%= m_o.year %>
+      </td>
+      <td>
+        <%= link_to 'Link', m_nom_winner_path(@oscar.id, m_o.year) %>
+      </td>
+      <td>
+        <%= link_to 'Link', m_nom_path(@oscar.id, m_o.year) %>
+      </td>
+  </tr>
+  <% end %>
+  <% @oscar.p_nominated.group(:year).order('year DESC').each do |p_o| %>
+    <tr>
+      <td>
+        <%= p_o.year %>
+      </td>
+      <td>
+        <%= link_to 'Link', p_nom_winner_path(@oscar.id, p_o.year) %>
+      </td>
+      <td>
+        <%= link_to 'Link', p_nom_path(@oscar.id, p_o.year) %>
+      </td>
+  </tr>
+  <% end %>
+  </table>
 </p>

@@ -1,0 +1,63 @@
+<div>
+  Winner of <strong><%= @oscar.category %></strong> from the <strong><%= @year %></strong> Oscars.
+</div>
+<br />
+<div>
+  Movie
+</div>
+<table>
+  <thead>
+    <tr>
+      <td>ID</td>
+      <td>Title</td>
+      <td>Year</td>
+      <td>IMDB Rating</td>
+      <td>User Rating</td>
+      <td>Genre</td>
+    </tr>
+  </thead>
+<% @movies.each do |movie| %>
+  <tr>
+    <td>
+      <%= movie.id %>
+    </td>
+    <td class="title">
+      <%= link_to movie.name.titleize, movie_show_path(movie.id) %>
+    </td>
+    <td>
+      <%= movie.release_date.year %>
+    </td>
+    <td class="imdb-rating">
+      <%= movie.imdb_rating || "-" %>
+    </td>
+    <td class="user-rating">
+      <%= render :partial => 'movies/user_rating', :locals => {:movie => movie } %>
+    </td>
+    <td>
+      <%= movie.genre[0].category rescue "-" %>
+    </td>
+</tr>
+<% end %>
+</table>
+<div>
+  Actor
+</div>
+<table>
+  <thead>
+    <tr>
+      <td>id</td>
+      <td>Fname</td>
+      <td>Mname</td>
+      <td>Lname</td>
+    </tr>
+  </thead>
+
+<% @actors.each do |actor| %>
+  <tr>
+    <td><%= link_to actor.id, '/actor/' + actor.id.to_s %></td>
+    <td><%= actor.fname %></td>
+    <td><%= actor.mname %></td>
+    <td><%= actor.lname %></td>
+  </tr>
+<% end %>
+</table>
