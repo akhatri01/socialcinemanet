@@ -17,8 +17,8 @@ class InfoController < ApplicationController
   
   def search
     
-    @search_val = params[:search_val] ? params[:search_val].gsub(/[^0-9a-z ]/i, '') : nil
-    
+    @search_val = params[:search_val] ? params[:search_val].gsub(/[^0-9a-z\' ]/i, '') : nil
+    puts @search_val
     if @search_val and @search_val.strip!=""
       @movie_result = Info.search_movies(@search_val)
       @genre_result = Info.search_genres(@search_val)
@@ -194,7 +194,7 @@ class InfoController < ApplicationController
       if !imdb_movie
         return render :text => 'false'
       else
-        movie = Movie.find_by_name (imdb_movie.title)
+        movie = Movie.find_by_name_and_release_date(imdb_movie.title, DateTime.strptime(imdb_movie.year.to_s, "%Y"))
         if !movie
           movie = Movie.new
           movie.name = imdb_movie.title

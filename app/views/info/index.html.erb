@@ -47,7 +47,7 @@
 <% @movies.each do |movie| %>
   <tr>
     <td>
-      <%= link_to movie.name, movie_show_path(movie.id) %>
+      <%= link_to movie.name.titleize, movie_show_path(movie.id) %>
     </td>
     <td>
       <%= movie.release_date.year %>
