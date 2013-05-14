@@ -14,7 +14,7 @@ class MoviesController < ApplicationController
     else
       movie_count = Movie.where("name <> '' AND name IS NOT null").count
     end
-    @max_pages = movie_count / 20
+    @max_pages = (movie_count / 20) + 1
     
     @idx = params[:idx].to_i
     @idx = @idx <= 0 ? 1 : @idx

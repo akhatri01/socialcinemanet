@@ -20,7 +20,7 @@ class GenresController < ApplicationController
   def show
     @genre = Genre.find(params[:id])
     @genre_movie_count = @genre.movies.count
-    @max_pages = @genre_movie_count / 20
+    @max_pages = (@genre_movie_count / 20) + 1
     
     @idx = params[:idx].to_i
     @idx = @idx <= 0 ? 1 : @idx

@@ -34,6 +34,11 @@ SocialCinemaNet::Application.routes.draw do
   match 'user/myaccount/changepassword/action' => 'users#change_password_action', :via => :put, :as => 'change_password_action'
   match 'user/myaccount/delete_curr_user' => 'users#delete_curr_user', :via => :delete, :as => 'delete_curr_user'
 
+  match 'actors' => 'people#actors', :as => 'actors'
+  match 'actor/:id' => 'people#actor', :as => 'actor'
+  match 'directors' => 'people#directors', :as => 'directors'
+  match 'director/:id' => 'people#director', :as => 'director'
+  
   root :to => 'info#index'
 
 

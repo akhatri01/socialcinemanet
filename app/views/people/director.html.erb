@@ -1,0 +1,69 @@
+<div>
+  Director: <strong><%= (@director.fname + " " + @director.mname + " " + @director.lname).titleize %></strong>
+  <br />
+  Showing movies that <%= (@director.fname + " " + @director.mname + " " + @director.lname).titleize %> acted in
+</div>
+<p>
+  Total number of movies: <%= number_with_delimiter @movies_count %>
+  <br />
+  Page <%= number_with_delimiter @idx %>
+  of
+  <%= number_with_delimiter (@max_pages == 0 ? 1 : @max_pages) %>
+</p>
+<table>
+  <thead>
+    <tr>
+      <td>ID</td>
+      <td>Title</td>
+      <td>Year</td>
+      <td>IMDB Rating</td>
+      <td>User Rating</td>
+      <td>Genre</td>
+    </tr>
+  </thead>
+<% @movies.each do |movie| %>
+  <tr>
+    <td>
+      <%= movie.id %>
+    </td>
+    <td class="title">
+      <%= link_to movie.name.titleize, movie_show_path(movie.id) %>
+    </td>
+    <td>
+      <%= movie.release_date.year %>
+    </td>
+    <td class="imdb-rating">
+      <%= movie.imdb_rating || "-" %>
+    </td>
+    <td class="user-rating">
+      <%= render :partial => 'movies/user_rating', :locals => {:movie => movie } %>
+    </td>
+    <td>
+      <%= movie.genre[0].category rescue "-" %>
+    </td>
+</tr>
+<% end %>
+</table>
+<div class="pagination">
+  <% if @idx != 1 %>
+    <%= link_to "First", {:controller => "people", :action => "director", :id => @director.id, :idx => 1 } %>
+  <% end %>
+  <% if @idx_prev %>
+    <%= link_to "Prev", {:controller => "people", :action => "director", :id => @director.id, :idx => @idx_prev } %>
+  <% end %>
+  <% if @idx > 3 %>
+    ...
+  <% end %>
+  <% @page_nums.each do |page| %>
+    <%= link_to page.to_s, {:controller => "people", :action => "director", :id => @director.id, :idx => page } %>
+  <% end %>
+  <% if @idx != @max_pages %>
+    ...
+  <% end %>
+  <% if @idx_next %>
+    <%= link_to "Next", {:controller => "people", :action => "director", :id => @director.id, :idx => @idx_next } %>
+  <% end %>
+  <% if @idx < @max_pages - 2 %>
+    <%= link_to "Last", {:controller => "people", :action => "director", :id => @director.id, :idx => @max_pages } %>
+  <% end %>
+</div>
