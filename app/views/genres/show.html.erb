@@ -10,7 +10,7 @@
 <p>
   Page <%= @idx %>
   of
-  <%= number_with_delimiter @max_pages+1 %>.
+  <%= number_with_delimiter (@max_pages == 0 ? 1 : @max_pages) %>
 </p>
 <table>
   <thead>
